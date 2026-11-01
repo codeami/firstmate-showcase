@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Six-Lane Agent Setup</title>
+<meta name="description" content="One person runs many coding agents with one set of rules, in six lanes.">
+<meta name="date" content="2026-10-30">
+<meta name="last-updated" content="2026-10-30">
+<link rel="stylesheet" href="style.css">
+<script src="nav.js"></script>
+</head>
+<body>
+<main class="wide">
+<p class="kicker">Start here</p>
+<h1>One person, many coding agents, one set of rules</h1>
+<p class="lede">The owner talks to one supervisor agent. It runs a crew of worker agents. Every agent reads the same plain-text rules. The owner approves every change that matters.</p>
+
+<h2 id="map">The map</h2>
+<p>Each box is a page. Click or tap a box to open it. The chip shows the state as of 2026-10-31.</p>
+
+<figure class="mindmap">
+<svg viewBox="0 0 960 680" role="group" aria-labelledby="mt">
+  <title id="mt">Mind map of the agentic setup</title>
+  <g class="wire">
+    <path d="M370 290 C 310 290, 300 75, 250 75"/>
+    <path d="M370 295 C 310 295, 300 205, 250 205"/>
+    <path d="M370 300 C 310 300, 300 335, 250 335"/>
+    <path d="M590 290 C 650 290, 660 75, 710 75"/>
+    <path d="M590 295 C 650 295, 660 205, 710 205"/>
+    <path d="M590 300 C 650 300, 660 335, 710 335"/>
+    <path d="M420 340 C 420 400, 135 400, 135 450"/>
+    <path d="M445 340 V 450"/>
+    <path d="M500 340 C 520 400, 620 420, 620 450"/>
+    <path d="M540 340 C 540 400, 825 400, 825 450"/>
+    <path d="M400 340 C 305 400, 305 500, 305 548 C 305 568, 250 568, 250 580"/>
+    <path d="M520 340 C 537 400, 537 500, 537 552 C 537 570, 480 568, 480 580"/>
+    <path d="M560 340 C 702 400, 702 500, 702 552 C 702 570, 710 570, 710 580"/>
+  </g>
+
+  <a href="index.html#map" class="node hub" aria-label="The agentic setup: this page">
+    <rect x="370" y="250" width="220" height="90"/>
+    <text x="480" y="290" text-anchor="middle" class="t">The agentic setup</text>
+    <text x="480" y="314" text-anchor="middle" class="s">one owner · six lanes</text>
+  </a>
+
+  <a href="s02.html" class="node" aria-label="Supervisor: one agent you talk to. Status: working">
+    <rect x="20" y="20" width="230" height="110"/>
+    <text x="34" y="46" class="t">Supervisor</text>
+    <text x="34" y="68" class="s">One agent you talk to.</text>
+    <text x="34" y="86" class="s">It plans and runs the crew.</text>
+    <rect x="34" y="98" width="72" height="20" class="chip ok"/><text x="70" y="112" text-anchor="middle" class="c ok">working</text>
+  </a>
+  <a href="s03.html" class="node" aria-label="Crews: one worker per task. Status: working">
+    <rect x="20" y="150" width="230" height="110"/>
+    <text x="34" y="176" class="t">Crews</text>
+    <text x="34" y="198" class="s">One worker per task, with</text>
+    <text x="34" y="216" class="s">its own git worktree.</text>
+    <rect x="34" y="228" width="72" height="20" class="chip ok"/><text x="70" y="242" text-anchor="middle" class="c ok">working</text>
+  </a>
+  <a href="s04.html" class="node" aria-label="Context system: one rules file for every tool. Status: working">
+    <rect x="20" y="280" width="230" height="110"/>
+    <text x="34" y="306" class="t">Context system</text>
+    <text x="34" y="328" class="s">One rules file for every</text>
+    <text x="34" y="346" class="s">tool, plus rooms.</text>
+    <rect x="34" y="358" width="72" height="20" class="chip ok"/><text x="70" y="372" text-anchor="middle" class="c ok">working</text>
+  </a>
+
+  <a href="s05.html" class="node" aria-label="Hooks and rules: scripts that block bad commands. Status: partly">
+    <rect x="710" y="20" width="230" height="110"/>
+    <text x="724" y="46" class="t">Hooks and rules</text>
+    <text x="724" y="68" class="s">Scripts that block bad</text>
+    <text x="724" y="86" class="s">commands before they run.</text>
+    <rect x="724" y="98" width="60" height="20" class="chip dn"/><text x="754" y="112" text-anchor="middle" class="c dn">partly</text>
+  </a>
+  <a href="s06.html" class="node" aria-label="Memory and index: reports, notes and a work index. Nightly learning installed, not run yet. Status: partly">
+    <rect x="710" y="150" width="230" height="110"/>
+    <text x="724" y="176" class="t">Memory and index</text>
+    <text x="724" y="198" class="s">Reports, notes, work index.</text>
+    <text x="724" y="216" class="s">Nightly learning: not run yet.</text>
+    <rect x="724" y="228" width="60" height="20" class="chip dn"/><text x="754" y="242" text-anchor="middle" class="c dn">partly</text>
+  </a>
+  <a href="s07.html" class="node" aria-label="Review surfaces: HTML pages the owner reads and approves. Status: partly">
+    <rect x="710" y="280" width="230" height="110"/>
+    <text x="724" y="306" class="t">Review surfaces</text>
+    <text x="724" y="328" class="s">HTML pages the owner</text>
+    <text x="724" y="346" class="s">reads and approves.</text>
+    <rect x="724" y="358" width="60" height="20" class="chip dn"/><text x="754" y="372" text-anchor="middle" class="c dn">partly</text>
+  </a>
+
+  <a href="skills.html" class="node more" aria-label="How skills work. Status: partly, not wired outside one repo">
+    <rect x="20" y="450" width="230" height="90"/>
+    <text x="34" y="476" class="t">How skills work</text>
+    <text x="34" y="498" class="s">Not wired outside one repo.</text>
+    <rect x="34" y="510" width="60" height="20" class="chip dn"/><text x="64" y="524" text-anchor="middle" class="c dn">partly</text>
+  </a>
+  <a href="s09.html" class="node more" aria-label="What works today: the blunt status list">
+    <rect x="360" y="450" width="170" height="90"/>
+    <text x="374" y="476" class="t">What works today</text>
+    <text x="374" y="498" class="s">The blunt status list.</text>
+  </a>
+  <a href="s10.html" class="node more" aria-label="Influences: ICM, Kun Chen, Matt Pocock">
+    <rect x="545" y="450" width="150" height="90"/>
+    <text x="559" y="476" class="t">Influences</text>
+    <text x="559" y="498" class="s">ICM and others.</text>
+  </a>
+  <a href="changelog.html" class="node more" aria-label="Changelog: what changed, newest first">
+    <rect x="710" y="450" width="230" height="90"/>
+    <text x="724" y="476" class="t">Changelog</text>
+    <text x="724" y="498" class="s">What changed, newest first.</text>
+  </a>
+
+  <a href="cast.html" class="node more" aria-label="Cast and authority: seats, the A0 to A3 ladder, the permission matrix. Status: designed">
+    <rect x="140" y="580" width="220" height="90"/>
+    <text x="154" y="606" class="t">Cast and authority</text>
+    <text x="154" y="628" class="s">Seats, A0–A3, the matrix.</text>
+    <rect x="154" y="640" width="76" height="20" class="chip dn"/><text x="192" y="654" text-anchor="middle" class="c dn">designed</text>
+  </a>
+  <a href="tasks.html" class="node more" aria-label="Task management: sprint board in trial, staff bots designed. Status: in trial">
+    <rect x="375" y="580" width="210" height="90"/>
+    <text x="389" y="606" class="t">Task management</text>
+    <text x="389" y="628" class="s">Sprint board and staff bots.</text>
+    <rect x="389" y="640" width="76" height="20" class="chip dn"/><text x="427" y="654" text-anchor="middle" class="c dn">in trial</text>
+  </a>
+  <a href="testing.html" class="node more" aria-label="Testing in public: two checks that proved the setup wrong">
+    <rect x="600" y="580" width="220" height="90"/>
+    <text x="614" y="606" class="t">Testing in public</text>
+    <text x="614" y="628" class="s">Two checks that proved</text>
+    <text x="614" y="646" class="s">the setup wrong.</text>
+  </a>
+</svg>
+</figure>
+
+<nav class="maplist" aria-label="Map as a list">
+<ul>
+  <li><a href="index.html#map">The agentic setup</a>
+    <ul>
+      <li><a href="s02.html">Supervisor</a> <span class="st st-ok">working</span><br>One agent you talk to. It plans and runs the crew.</li>
+      <li><a href="s03.html">Crews</a> <span class="st st-ok">working</span><br>One worker per task, with its own git worktree.</li>
+      <li><a href="s04.html">Context system</a> <span class="st st-ok">working</span><br>One rules file for every tool, plus rooms.</li>
+      <li><a href="s05.html">Hooks and rules</a> <span class="st st-dn">partly</span><br>Scripts that block bad commands before they run.</li>
+      <li><a href="s06.html">Memory and index</a> <span class="st st-dn">partly</span><br>Reports, notes and a work index. Nightly learning is installed but has not run yet.</li>
+      <li><a href="s07.html">Review surfaces</a> <span class="st st-dn">partly</span><br>HTML pages the owner reads and approves.</li>
+      <li><a href="skills.html">How skills work</a> <span class="st st-dn">partly</span><br>Not wired outside one repo.</li>
+      <li><a href="cast.html">Cast and authority</a> <span class="st st-dn">designed</span><br>Seats, the A0–A3 ladder and the permission matrix.</li>
+      <li><a href="tasks.html">Task management</a> <span class="st st-dn">in trial</span><br>The sprint board is in trial. Staff bots are designed, not run.</li>
+      <li><a href="testing.html">Testing in public</a><br>Two checks that proved the setup wrong.</li>
+      <li><a href="s09.html">What works today</a></li>
+      <li><a href="s10.html">Influences</a></li>
+      <li><a href="changelog.html">Changelog</a></li>
+    </ul>
+  </li>
+</ul>
+</nav>
+<p class="lbl">Chips: working = shown with evidence. Partly = some parts work, and some are not live or not proven. Details are on <a href="s09.html">What works today</a>.</p>
+
+<h2 id="what">What is this?</h2>
+<p>This is a tour of a personal setup for running AI coding agents. The idea in one sentence: keep your intent and the agents' actions as plain files, compare the two, and approve every change to your rules.</p>
+<p>The supervisor and most crew mechanics are upstream <a href="https://github.com/kunchenguid/firstmate">Firstmate</a>, MIT licence, by Kun Chen and contributors. These pages link to its docs and do not copy them. The owner built the other parts: the shared rules file and rooms, the hooks, the work index and the review flow. Shell tests check them.</p>
+
+<h2 id="paths">Two ways to read this</h2>
+<div class="paths">
+  <div class="box key">
+    <h3>You have 10 minutes</h3>
+    <ol>
+      <li>Read this page.</li>
+      <li><a href="s09.html">What works today, and what does not</a>.</li>
+      <li>Come back to <a href="#map">the map</a>.</li>
+    </ol>
+    <p>Then one link: <a href="https://github.com/kunchenguid/firstmate">upstream Firstmate</a>.</p>
+  </div>
+  <div class="box key">
+    <h3>You have 1 hour</h3>
+    <p>About 7 minutes for each page, in this order:</p>
+    <ol>
+      <li>This page</li>
+      <li><a href="s02.html">Supervisor</a></li>
+      <li><a href="s03.html">Crews</a> (has a worked example)</li>
+      <li><a href="s04.html">Context system</a></li>
+      <li><a href="skills.html">How skills work</a></li>
+      <li><a href="s06.html">Memory and index</a></li>
+      <li><a href="s07.html">Review surfaces</a></li>
+      <li><a href="s09.html">What works today</a></li>
+    </ol>
+    <p>Keep as reference: <a href="vendors.html">Agents as vendors</a>, <a href="s05.html">Hooks</a>, <a href="s08.html">Planning</a>, <a href="cast.html">Cast and authority</a>, <a href="tasks.html">Task management</a>, <a href="testing.html">Testing in public</a>, <a href="s10.html">Influences</a>.</p>
+  </div>
+</div>
+
+<div class="box key">
+<p><strong>The idea in one line.</strong> Running a fleet of AI agents is like managing a contract with several vendors. <a href="vendors.html">Agents as vendors</a> maps that practice to these pages.</p>
+</div>
+</main>
+</body>
+</html>

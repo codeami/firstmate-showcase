@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Planning Side</title>
+<meta name="description" content="A planner agent and eight numbered stages take a task from intent to learning.">
+<meta name="date" content="2026-10-30">
+<meta name="last-updated" content="2026-10-30">
+<link rel="stylesheet" href="style.css">
+<script src="nav.js"></script>
+</head>
+<body>
+<main>
+<p class="kicker">Section 8 · reference</p>
+<h1>Planning side: a planner agent and stage contracts</h1>
+<p class="lede">Two agents split the thinking. A planner on a cheaper model does research, audits and plans. Claude Code builds.</p>
+
+<h2>Who does what</h2>
+<div class="tablewrap"><table>
+<tr><th>Role</th><th>Job</th></tr>
+<tr><td>Supervisor (Firstmate)</td><td>The one point of contact. Backlog, crews, review.</td></tr>
+<tr><td>Builder (Claude Code)</td><td>Features and builds. Interactive web work.</td></tr>
+<tr><td>Planner (a cheaper-model agent harness)</td><td>Research, audits, plans. Cheap tokens, long thinking. It also looks after the context system.</td></tr>
+</table></div>
+
+<h2>The software factory room</h2>
+<p>One task is one run through eight numbered stages, in order. Each stage writes one file. The next stage starts only when the earlier file exists. Where a stage has a gate, its file must carry <code>approved: &lt;date&gt;</code>.</p>
+<div class="tablewrap"><table>
+<tr><th>Stage</th><th>Job</th><th>Owner gate</th></tr>
+<tr><td>01 intent</td><td>The owner's words, as numbered items I1…In</td><td>yes</td></tr>
+<tr><td>02 spec</td><td>Acceptance criteria A1…An, each linked to an intent item</td><td>sometimes</td></tr>
+<tr><td>03 tasks</td><td>Split the work, pick scout or ship, write the brief</td><td>no</td></tr>
+<tr><td>04 build</td><td>Worktree, branch, tests</td><td>no</td></tr>
+<tr><td>05 validate</td><td>Pre-push gate: review, test, docs, lint</td><td>sometimes</td></tr>
+<tr><td>06 review</td><td>Asked versus delivered</td><td>yes</td></tr>
+<tr><td>07 land</td><td>Merge on the owner's word</td><td>yes</td></tr>
+<tr><td>08 learn</td><td>Session notes and proposed rule edits</td><td>yes</td></tr>
+</table></div>
+<p>Rule: fix a wrong result in the stage file, not in the output. The stage file is the program.</p>
+
+<h2>The chain check</h2>
+<p><code>bin/chain-check &lt;run folder&gt;</code> reads a run's intent and spec files. It checks ids, approval and coverage. Every acceptance criterion must point to an intent item. A spec must not exist before the owner approves its intent.</p>
+<p>It has fixtures: one good run and several broken runs. On 2026-10-30:</p>
+<pre>PASS  T7 passes fixtures/chain/ok
+PASS  T8 fails bad-orphan-criterion (A with no I)
+PASS  T9 fails bad-unapproved (02 exists, 01 not approved)</pre>
+<p><span class="st st-ok">working</span> on fixtures. <span class="st st-dn">designed, not proven</span> on a real product run end to end. The planner's own plans are still drafts.</p>
+
+</main>
+</body>
+</html>

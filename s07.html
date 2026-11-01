@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Review Surfaces</title>
+<meta name="description" content="The owner reviews every report and draft as an HTML page, not in a terminal.">
+<meta name="date" content="2026-10-30">
+<meta name="last-updated" content="2026-10-30">
+<link rel="stylesheet" href="style.css">
+<script src="nav.js"></script>
+</head>
+<body>
+<main>
+<p class="kicker">Section 7 · Lane 6</p>
+<h1>Review surfaces lane</h1>
+<p class="lede">The owner does not review work in a terminal. Every report, plan or draft meant for the owner becomes an HTML page.</p>
+
+<h2>Why pages, not chat</h2>
+<ul>
+  <li>A page can hold a diagram, a table and evidence on one screen.</li>
+  <li>The owner can mark a sentence and leave a note on it.</li>
+  <li>The note goes back to the agent that wrote the page. The agent fixes the page and asks again.</li>
+</ul>
+<p>The house rule says it in one line: anything the owner reviews is an HTML page, opened in the review tool. A Markdown report is not an exception.</p>
+
+<h2>The parts</h2>
+<div class="tablewrap"><table>
+<tr><th>Part</th><th>What it is</th><th>Status</th></tr>
+<tr><td>Lavish (<code>lavish-axi</code>, by Kun Chen)</td><td>A local review tool. It serves an HTML file, lets the owner annotate it, and routes the notes back to the agent.</td><td><span class="st st-ok">working</span> many review sessions open on 2026-10-30</td></tr>
+<tr><td>Cockpit page (<code>bin/aio</code>)</td><td>One generated board: context, work, memory and decisions together. A weekday morning job rebuilds it and adds a health report from the harness checker.</td><td><span class="st st-ok">works by hand</span> <span class="st st-dn">morning job: designed, not proven</span></td></tr>
+<tr><td>Bearings (upstream Firstmate skill)</td><td>A view of the supervisor's own state: what waits on the owner, what runs, what is next.</td><td><span class="st st-dn">designed, not proven</span> not run for this site</td></tr>
+</table></div>
+
+<h2>How one review round works</h2>
+<pre>agent writes page.html
+  → review tool opens it for the owner
+  → owner marks text, writes notes
+  → notes go to the agent's inbox
+  → agent edits page.html, asks again
+  → owner ends the review, or approves</pre>
+
+<div class="box warn">
+<p><strong>No screenshot.</strong> The live cockpit holds private project names, so this page shows none.</p>
+</div>
+
+</main>
+</body>
+</html>

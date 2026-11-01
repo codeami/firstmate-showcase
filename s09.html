@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>What Works Today</title>
+<meta name="description" content="A blunt list of what works, what does not, and what is not proven yet.">
+<meta name="date" content="2026-10-30">
+<meta name="last-updated" content="2026-10-31">
+<link rel="stylesheet" href="style.css">
+<script src="nav.js"></script>
+</head>
+<body>
+<main>
+<p class="kicker">Section 9 · as of 2026-10-31</p>
+<h1>What works today, and what does not</h1>
+<p class="lede">A scout checked every row below with a command or a file read on 2026-10-31. The checks were not re-run for publication, so every state is as of that date. If there is no evidence, the row says "designed, not proven".</p>
+
+<h2>Not working, or failing on purpose</h2>
+<div class="tablewrap"><table>
+<tr><th>Part</th><th>State</th><th>Evidence</th></tr>
+<tr><td>Test T6: "Firstmate never points at the context system"</td><td><span class="st st-no">fails by design</span></td><td><code>tests/chain.sh</code>: 36 pass, 1 fail (T6). The owner's fork makes scouts run the plain-English checker from the context system. The owner keeps this trade-off. See <a href="testing.html">Testing in public</a>.</td></tr>
+<tr><td>Save facts before compaction</td><td><span class="st st-no">not working</span></td><td>No PreCompact hook starts the stow skill. Auto-compaction gives the model no turn first.</td></tr>
+<tr><td>Skills for tools other than Claude Code</td><td><span class="st st-no">not working</span></td><td>The shared skill folder that other tools read does not exist.</td></tr>
+<tr><td>Installed Claude plugins</td><td><span class="st st-no">not enabled</span></td><td>The settings have no list of enabled plugins.</td></tr>
+<tr><td>A rule to read the work index</td><td><span class="st st-no">missing</span></td><td>Neither map mentions the index (a count of 0 in each).</td></tr>
+</table></div>
+
+<h2>Changed on 2026-10-31</h2>
+<div class="tablewrap"><table>
+<tr><th>Part</th><th>State</th><th>Evidence</th></tr>
+<tr><td>backpass (nightly rule proposals)</td><td><span class="st st-ok">installed</span> <span class="st st-dn">nightly job not yet seen to succeed</span></td><td>The job's own login shell now finds backpass, version 0.1.43. Launchd reports 0 runs since the job was reloaded. The old "command not found" lines in its log are from before the install.</td></tr>
+<tr><td>Two personal skills</td><td><span class="st st-ok">linked</span> for Claude Code</td><td>Both are links in Claude Code's user skill folder. So any Claude Code session sees them, in any repo.</td></tr>
+<tr><td>Backlog Kanban page</td><td><span class="st st-ok">working</span></td><td>A script builds a board page from the backlog. Its test: 10 pass, 0 fail.</td></tr>
+</table></div>
+
+<h2>Working</h2>
+<div class="tablewrap"><table>
+<tr><th>Part</th><th>Evidence</th></tr>
+<tr><td>The map loads into Claude Code, Codex, Gemini, OpenCode and backpass's path</td><td><code>tests/run.sh</code>: 58 pass, 0 fail.</td></tr>
+<tr><td>Supervisor starts scouts in disposable worktrees</td><td>This site. More than 100 scout reports on disk.</td></tr>
+<tr><td>Work-index hook, at session start and before compaction</td><td>The script is installed with the other hooks.</td></tr>
+<tr><td>Harness health checker</td><td><code>bin/harness-check</code> exists. Its test: 14 pass, 0 fail.</td></tr>
+<tr><td>Review pages in Lavish</td><td>This site was reviewed there before it went up.</td></tr>
+<tr><td>Hook: deny file writes through the shell</td><td>It blocked commands in this scout's own session.</td></tr>
+<tr><td>Chain check on fixtures</td><td><code>tests/chain.sh</code> T7 to T9 pass.</td></tr>
+<tr><td>Worker permission mode</td><td>Works as designed: bypass is the standing default. No mode file exists, so every worker launches with checks skipped. All 10 running Claude worker sessions carry the bypass flag. See <a href="cast.html">Cast and authority</a>.</td></tr>
+</table></div>
+
+<h2>Designed, not proven</h2>
+<ul>
+  <li>The model-reviewed permission mode. It is a one-line switch, and it depends on a separate settings block that is still under review.</li>
+  <li>The nightly backpass run, and the morning review of its proposals.</li>
+  <li>Hook: deny secret prints, and warn on key-shaped prompts. Installed. Not triggered in a recorded test.</li>
+  <li>Weekday morning rebuild of the cockpit page.</li>
+  <li><code>/stow</code> into the learnings file. Upstream skill. Not exercised recently.</li>
+  <li>Bearings. Upstream skill. Not run for this site.</li>
+  <li>The canary probe across all agents. It costs tokens. Not run for this site.</li>
+  <li>The factory chain on a real product run, start to finish.</li>
+  <li>The staff-bot engine and the business seats. See <a href="tasks.html">Task management</a> and <a href="cast.html">Cast and authority</a>.</li>
+  <li>Any token-cost saving. Nobody measured one here.</li>
+</ul>
+
+<div class="box key">
+<p><strong>In short.</strong> The rules layer, the crews and the review loop work. The learning loop is installed but has not run yet. Workers skip permission checks by default, and the safer mode is not switched on.</p>
+</div>
+</main>
+</body>
+</html>

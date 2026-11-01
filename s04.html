@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Context System Lane</title>
+<meta name="description" content="One rules file, linked into every agent tool, plus layers and rooms.">
+<meta name="date" content="2026-10-30">
+<meta name="last-updated" content="2026-10-30">
+<link rel="stylesheet" href="style.css">
+<script src="nav.js"></script>
+</head>
+<body>
+<main>
+<p class="kicker">Section 4 · Lane 3</p>
+<h1>Context system: the map, layers and rooms</h1>
+<p class="lede">Every agent tool reads the same short rules file first. The owner calls it the map.</p>
+
+<h2>One file, many tools</h2>
+<p>The map is one Markdown file in a git repo. A Nix home-manager config links it into the place each tool expects:</p>
+<div class="tablewrap"><table>
+<tr><th>Tool</th><th>Reads at start</th></tr>
+<tr><td>Claude Code</td><td><code>~/.claude/CLAUDE.md</code></td></tr>
+<tr><td>Codex</td><td><code>~/.codex/AGENTS.md</code></td></tr>
+<tr><td>OpenCode</td><td><code>~/.config/opencode/AGENTS.md</code></td></tr>
+<tr><td>Gemini CLI</td><td><code>~/.gemini/GEMINI.md</code></td></tr>
+<tr><td>backpass (rule proposer)</td><td><code>~/.agents/AGENTS.md</code></td></tr>
+</table></div>
+<p>All five are links to the same file. Change the map once, and every tool sees the change in its next session.</p>
+<p>The map holds house rules, a "who does what" list, and a routing table. The routing table says: for this kind of task, go to this folder and read these files first.</p>
+
+<h2>Five layers</h2>
+<p>Context comes in layers, from broad to narrow. An agent loads only the layers its task needs.</p>
+<figure>
+<svg viewBox="0 0 380 300" role="img" aria-labelledby="t4 d4">
+  <title id="t4">The layer stack</title>
+  <desc id="d4">Five layers from broad to narrow: base map, vendor settings, project rules, room rules, the work in hand.</desc>
+  <g font-size="13">
+    <rect x="10" y="10" width="360" height="50" rx="8" class="card" style="stroke: var(--l3); stroke-width: 2"/>
+    <text x="24" y="31" font-weight="700">Base: the map</text>
+    <text x="24" y="50" font-size="11" class="soft">who, house rules, routing · every session</text>
+    <rect x="30" y="68" width="320" height="50" rx="8" class="card" style="stroke: var(--l3); stroke-width: 2"/>
+    <text x="44" y="89" font-weight="700">Vendor</text>
+    <text x="44" y="108" font-size="11" class="soft">link to the map + that tool's own settings</text>
+    <rect x="50" y="126" width="280" height="50" rx="8" class="card" style="stroke: var(--l3); stroke-width: 2"/>
+    <text x="64" y="147" font-weight="700">Project</text>
+    <text x="64" y="166" font-size="11" class="soft">a repo's AGENTS.md: build, test, repo rules</text>
+    <rect x="70" y="184" width="240" height="50" rx="8" class="card" style="stroke: var(--l3); stroke-width: 2"/>
+    <text x="84" y="205" font-weight="700">Room</text>
+    <text x="84" y="224" font-size="11" class="soft">CONTEXT.md for one kind of work</text>
+    <rect x="90" y="242" width="200" height="50" rx="8" class="card" style="stroke: var(--l3); stroke-width: 2"/>
+    <text x="104" y="263" font-weight="700">Work</text>
+    <text x="104" y="282" font-size="11" class="soft">inbox, drafts, notes</text>
+  </g>
+</svg>
+<figcaption>Broad at the top, narrow at the bottom. A narrow layer adds to a broad one. It never repeats it.</figcaption>
+</figure>
+
+<h2>Rooms</h2>
+<p>A room is a folder for one kind of work. Its <code>CONTEXT.md</code> names the input, the task, the output and a check. Examples in this setup:</p>
+<ul>
+  <li><strong>Writing room.</strong> A voice file with tone rules. It grows from the owner's feedback. Drafts are review pages.</li>
+  <li><strong>Software factory room.</strong> Eight numbered stages from intent to "learn". See <a href="s08.html">Planning</a>.</li>
+  <li><strong>Study room.</strong> One note per topic, mapped to things already built.</li>
+</ul>
+<p>Rooms follow the stage-contract idea from Jake Van Clief's ICM (see <a href="s10.html">Influences</a>). That idea has three parts: ordered stages, a contract per stage, and taste rules in their own files.</p>
+
+<h2>A design rule: the core is pure</h2>
+<p>The owner thinks of the map and rooms as the core of a hexagon. Tools are adapters that plug in through the links. Nothing outside writes into the core. A tool may propose an edit. The owner applies it.</p>
+
+<h2>Tests</h2>
+<p>Plain shell tests check the structure, with no model calls:</p>
+<ul>
+  <li><code>tests/run.sh</code>: map shape, rooms, routes, links. <span class="st st-ok">58 pass, 0 fail</span> (2026-10-30).</li>
+  <li><code>tests/e2e-probe.sh</code>: asks each agent for a "canary" word from the map. This proves the agent really loaded it. <span class="st st-dn">designed, not proven</span> on 2026-10-30. It costs tokens, so this draft did not run it. This session did load the map.</li>
+</ul>
+
+</main>
+</body>
+</html>
