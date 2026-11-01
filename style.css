@@ -110,3 +110,18 @@ th { font: .68rem var(--mono); text-transform: uppercase; letter-spacing: .08em;
 .log { list-style: none; padding: 0; }
 .log li { padding: 12px 0; border-bottom: 1px solid var(--line); max-width: none; }
 footer { margin-top: 2rem; color: var(--soft); font-size: .85rem; }
+
+/* Collapsible tree on the Core logic page */
+.tree { border-top: 1px solid var(--line); margin: 1rem 0; }
+.tree details { border-bottom: 1px solid var(--line); padding: 0 0 0 4px; }
+.tree summary { cursor: pointer; list-style: none; padding: .7rem 0; font: 500 1.05rem/1.3 var(--serif); }
+.tree summary::-webkit-details-marker { display: none; }
+.tree summary::before { content: "+"; display: inline-block; width: 1.2rem; font-family: var(--mono); color: var(--accent); }
+.tree details[open] > summary::before { content: "−"; }
+.tree details > :not(summary) { margin-left: 1.2rem; }
+.cmp { list-style: none; padding: 0; }
+.cmp li { margin: .35rem 0; display: grid; grid-template-columns: 5.6rem minmax(0, 1fr); gap: .5rem; align-items: baseline; }
+.cmp .st { text-align: center; }
+.gap { border-left: 3px solid var(--todo); padding-left: .7rem; }
+.rule pre { max-height: 22rem; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
+.rule { margin-bottom: 1rem; color: var(--soft); font-size: .9rem; }
