@@ -81,10 +81,10 @@
 <p>Upstream Firstmate runs each worker as a normal agent session in a visible terminal window. It does not use a tool's built-in sub-agents. The upstream docs give the reason. A built-in sub-agent is hard to see and hard to steer. Its work can die with its parent session. Upstream records one such loss and added a guard against it (<code>docs/subagent-guard.md</code>).</p>
 
 <h2>What the owner changed</h2>
-<p>The owner runs a private fork. It has two small changes on top of upstream (both 2026-10-28):</p>
+<p>The owner runs a private fork, built and running. It has two small changes of the owner's own on top of upstream (both 2026-10-28):</p>
 <div class="tablewrap"><table>
 <tr><th>Change</th><th>Why</th></tr>
-<tr><td>Scouts run a plain-English checker on their report before they say "done".</td><td>Reports go to a person. The checker flags long sentences and vague words.</td></tr>
+<tr><td>Scouts run a plain-English checker (STE100-style, after ASD-STE100 Simplified Technical English) on their report before they say "done".</td><td>Reports go to a person. The checker flags long sentences and vague words.</td></tr>
 <tr><td>A reviewed path moves notes from the agent's own auto-memory into the curated facts file.</td><td>Facts enter long-term memory only after review.</td></tr>
 </table></div>
 <p>The first change has a cost. It makes Firstmate depend on the owner's context system. A test that checks "Firstmate never points back at the context system" now fails. The owner accepts this trade-off. See <a href="s09.html">what works today</a>.</p>
