@@ -11,6 +11,8 @@ var PAGES = [
   ["s04.html",       "Context system"],
   ["s05.html",       "Hooks and rules"],
   ["skills.html",    "How skills work"],
+  ["maps/skills.html", "Skill map"],
+  ["maps/flow.html", "Harness flow"],
   ["s06.html",       "Memory and index"],
   ["s07.html",       "Review surfaces"],
   ["s08.html",       "Planning side"],
