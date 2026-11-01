@@ -1,12 +1,13 @@
 /* Shared shell for every page: sidebar nav, header with day/night toggle,
    draft banner, byline and previous/next links. No build step, no network.
    To add or rename a page, edit one line in PAGES or MORE. Order here is reading order.
-   PAGES are the five main pages. MORE holds every other page, behind a "More" fold. */
+   PAGES are the six main pages. MORE holds every other page, behind a "More" fold. */
 var DRAFT = false; // false removes the draft banner on every page
 
 var PAGES = [
   ["index.html",     "The story"],
   ["overview.html",  "How it works"],
+  ["core.html",      "Core logic"],
   ["skills.html",    "Skills"],
   ["harness.html",   "Harness flow"],
   ["s09.html",       "What works today"]

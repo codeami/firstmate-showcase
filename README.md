@@ -2,7 +2,7 @@
 
 How one person runs a fleet of AI agents like vendor teams: the FirstMate orchestrator, its flow and its human review gates.
 
-This repo is a small static site with five main pages: a short mock chat with the orchestrator, How it works, Skills, Harness flow, and What works today. That last page says plainly what works and what is only designed. Every other page, such as "Agents as vendors", sits under "More" in the menu.
+This repo is a small static site with six main pages: a short mock chat with the orchestrator, How it works, Core logic, Skills, Harness flow, and What works today. That last page says plainly what works and what is only designed. Every other page, such as "Agents as vendors", sits under "More" in the menu.
 
 Read it at https://codeami.github.io/firstmate-showcase/
 
