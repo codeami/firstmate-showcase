@@ -52,8 +52,10 @@ KEYS = {
 key = "".join(f'<span class="ky {KEYS[k][0]}" title="{E(KEYS[k][2])}"><i></i>{KEYS[k][1]}</span>' for k in meta.get("key", []))
 legend = f'<div class="sm-key" aria-label="Key">{key}</div>' if key else ""
 
-here = out.name
-LINKS = [("../index.html", "Story"), ("../overview.html", "Six lanes"), ("skills.html", "Skill map"), ("flow.html", "Harness flow")]
+# The site's five main pages. A map marks the page it belongs to as current.
+here = {"skills.html": "../skills.html", "flow.html": "../harness.html"}.get(out.name, "")
+LINKS = [("../index.html", "Story"), ("../overview.html", "How it works"), ("../skills.html", "Skills"),
+         ("../harness.html", "Harness flow"), ("../s09.html", "What works today")]
 CUR = ' aria-current="page"'
 links = "".join(f'<a class="lk" href="{h}"{CUR if h == here else ""}><span class="tl">{t}</span></a>' for h, t in LINKS)
 NAV = ('<header class="top wide"><div class="in">'
