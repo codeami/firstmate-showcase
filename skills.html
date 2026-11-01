@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>How Skills Work</title>
+<meta name="description" content="A skill is a folder with a SKILL.md file; the tool lists it at start and loads it on use.">
+<meta name="date" content="2026-10-30">
+<meta name="last-updated" content="2026-10-30">
+<link rel="stylesheet" href="style.css">
+<script src="nav.js"></script>
+</head>
+<body>
+<main>
+<p class="kicker">Lanes 3 and 4 · how instructions load on demand</p>
+<h1>How skills work</h1>
+<p class="lede">The map is always loaded. A skill is loaded only when a task needs it. This keeps the start of every session small.</p>
+<p class="lbl">Marks: [V] = verified on disk or in this session · [U] = not verified (from tool docs, or a guess). Source: a skills audit on 2026-10-30, re-checked the same day.</p>
+
+<h2>What a skill is</h2>
+<p>A skill is a folder. The folder holds one file, <code>SKILL.md</code>, and can hold scripts or reference files. The file starts with frontmatter:</p>
+<pre>---
+name: stow
+description: >-
+  File durable facts into the learnings file
+  before a session reset or compaction.
+---
+(the body: steps the agent follows)</pre>
+<p>The <code>name</code> must match the folder name. The <code>description</code> says when to use the skill. The audit checked 84 skill files. None had missing or bad frontmatter. [V]</p>
+
+<h2>How a skill reaches a session</h2>
+<figure>
+<svg viewBox="0 0 380 320" role="img" aria-labelledby="tk dk">
+  <title id="tk">From tool to loaded skill</title>
+  <desc id="dk">The tool starts. It reads its skill folders. It shows the model a list of names and descriptions. It loads a skill body only when the task uses that skill.</desc>
+  <defs>
+    <marker id="ak" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" style="fill: var(--soft)"/>
+    </marker>
+  </defs>
+  <g font-size="13">
+    <rect x="20" y="10" width="340" height="52" class="card" style="stroke: var(--l1); stroke-width: 2"/>
+    <text x="34" y="32" font-weight="700">1 · Tool starts</text>
+    <text x="34" y="51" font-size="11" class="soft">in one repo folder</text>
+    <rect x="20" y="84" width="340" height="52" class="card" style="stroke: var(--l3); stroke-width: 2"/>
+    <text x="34" y="106" font-weight="700">2 · Reads its skill folders</text>
+    <text x="34" y="125" font-size="11" class="soft">user folder + this repo's folder only</text>
+    <rect x="20" y="158" width="340" height="52" class="card" style="stroke: var(--l5); stroke-width: 2"/>
+    <text x="34" y="180" font-weight="700">3 · Lists name + description</text>
+    <text x="34" y="199" font-size="11" class="soft">every visible skill, before the first prompt</text>
+    <rect x="20" y="232" width="340" height="52" class="card" style="stroke: var(--l2); stroke-width: 2"/>
+    <text x="34" y="254" font-weight="700">4 · Body loads on use</text>
+    <text x="34" y="273" font-size="11" class="soft">only when the task matches the description</text>
+  </g>
+  <path d="M190 62 V 82" class="wire" marker-end="url(#ak)"/>
+  <path d="M190 136 V 156" class="wire" marker-end="url(#ak)"/>
+  <path d="M190 210 V 230" class="wire" marker-end="url(#ak)"/>
+  <text x="20" y="308" font-size="11" class="soft">Step 3 costs tokens in every session. Step 4 costs tokens only on use.</text>
+</svg>
+<figcaption>Tool → folder → description list → body loaded on use.</figcaption>
+</figure>
+<p>Claude Code lists every skill it can see by name and description at session start. It loads the body only when the agent uses the skill. [V for this session. The mechanism inside the tool: U]</p>
+<p>So descriptions are not free. In the supervisor's repo, the list is about 13,000 characters of descriptions before the first prompt. [V]</p>
+
+<h2>Which folders each tool reads</h2>
+<div class="tablewrap"><table>
+<tr><th>Tool</th><th>Skill folders</th><th>On the main machine</th></tr>
+<tr><td>Claude Code</td><td><code>~/.claude/skills/</code> (user), <code>.claude/skills/</code> in the open repo, and enabled plugins</td><td>User folder holds only skills that the Claude app syncs. [V]</td></tr>
+<tr><td>Codex, Gemini CLI, OpenCode, Pi</td><td><code>~/.agents/skills/</code> or the tool's own folder</td><td>None of these folders exists. [V] Folder names come from tool docs. [U]</td></tr>
+<tr><td>Planner agent</td><td>No skill folder found</td><td>Skill support unknown. [U]</td></tr>
+</table></div>
+
+<h2>Why a skill in one repo is invisible in another</h2>
+<p>A repo's <code>.claude/skills/</code> folder counts only when the session runs in that repo. The supervisor's repo has 28 skills. A session in any other repo sees none of them. [V]</p>
+<p>The user folder would fix this, but nothing links the owner's own skills into it. The setup links the map into five tools and links no skills. [V]</p>
+
+<h2>User-invoked and agent-only skills</h2>
+<ul>
+  <li><strong>User-invoked.</strong> The person types <code>/name</code>. Six of the supervisor's 28 skills are like this, for example <code>/stow</code> and <code>/bearings</code>. [V]</li>
+  <li><strong>Agent-only.</strong> The frontmatter says <code>user-invocable: false</code>. The skill is not in the <code>/</code> menu. The model still sees its description and loads it when a trigger matches. [U]</li>
+</ul>
+
+<h2>The trigger index</h2>
+<p>Upstream Firstmate keeps one skill that is only a table: 21 agent-only skills and the exact event that must load each one. For example: "before you treat a report as complete, load the completion-gate skill". The agent reads one table instead of guessing from 21 descriptions. [V]</p>
+
+<h2>Workflows with no skill</h2>
+<p>Some repeated jobs have no skill and no trigger. People or agents do them by hand: [V]</p>
+<ul>
+  <li><strong>Read the work index.</strong> A hook builds it. No rule in either map tells agents to read it.</li>
+  <li><strong>Save facts before compaction.</strong> The stow skill says "before compaction", but nothing starts it.</li>
+  <li><strong>End-of-session note.</strong> A prompt hook text. It works only in Claude Code, and only on the exact words "end of session".</li>
+  <li><strong>Find an existing script.</strong> The owner's tool folder has no index. The upstream script list misses 42 scripts. So agents write new ones.</li>
+</ul>
+
+<h2>What is broken today</h2>
+<p>Checked again on 2026-10-30, after the audit:</p>
+<div class="tablewrap"><table>
+<tr><th>Fault</th><th>State</th></tr>
+<tr><td>Personal skills for Claude Code. Since 2026-10-31, two personal skills are linked into Claude Code's user folder, so every Claude Code session sees them.</td><td><span class="st st-ok">fixed</span> [V]</td></tr>
+<tr><td>Personal skills for other tools. The shared folder that other tools read does not exist. Outside the supervisor's repo, no session has <code>stow</code> or <code>bearings</code>.</td><td><span class="st st-no">broken</span> [V]</td></tr>
+<tr><td>Nothing runs stow before a context squeeze. Auto-compaction gives the model no turn first.</td><td><span class="st st-no">broken</span> [V]</td></tr>
+<tr><td>Three Claude plugins are installed but not enabled. None of their skills is visible.</td><td><span class="st st-no">broken</span> [V]</td></tr>
+<tr><td>Scripts are hard to find. Neither map names the owner's tools, and agents write new scripts.</td><td><span class="st st-no">broken</span> [V]</td></tr>
+<tr><td>Neither map tells agents to read the work index.</td><td><span class="st st-no">broken</span> [V]</td></tr>
+<tr><td>The work-index hook was in the repo but not on the machine.</td><td><span class="st st-ok">fixed</span> [V]</td></tr>
+<tr><td>A hook pointed at a missing script.</td><td><span class="st st-ok">fixed</span> [V]</td></tr>
+<tr><td>No check catches this drift. A read-only harness checker now lists hooks, jobs and plugins.</td><td><span class="st st-ok">fixed</span> [V]</td></tr>
+</table></div>
+<p>The skill files are healthy. The faults are in the wiring around them.</p>
+
+</main>
+</body>
+</html>

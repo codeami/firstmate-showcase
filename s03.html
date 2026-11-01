@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Crews Lane</title>
+<meta name="description" content="Each task gets a brief, a worktree and a status file, and ends at a completion gate.">
+<meta name="date" content="2026-10-30">
+<meta name="last-updated" content="2026-10-30">
+<link rel="stylesheet" href="style.css">
+<script src="nav.js"></script>
+</head>
+<body>
+<main>
+<p class="kicker">Section 3 · Lane 2</p>
+<h1>Crews lane: scouts and ships</h1>
+<p class="lede">A crew is one worker agent on one task. There are two kinds.</p>
+
+<div class="cards">
+  <div class="box"><h3>Scout</h3><p>Finds facts. The output is a written report. Nothing is pushed. The worktree is thrown away after.</p></div>
+  <div class="box"><h3>Ship</h3><p>Changes code. The output is a pull request or a local merge. The owner says when it merges.</p></div>
+</div>
+
+<h2>Coming next: general-purpose lanes</h2>
+<p><span class="st st-dn">planned</span> None of these is built. Nothing here is proven. Each would follow the same rules as the crews above: one task per worker, written instructions, checks, and nothing acts without the owner's word.</p>
+<div class="cards">
+  <div class="box"><h3>Comms <span class="st st-dn">planned</span></h3><p>Would handle text and calls. Each message or call goes out only with the owner's word.</p></div>
+  <div class="box"><h3>Mail and calendar <span class="st st-dn">planned</span></h3><p>Would plan the day from mail and calendar, voice first. It proposes. The owner decides.</p></div>
+  <div class="box"><h3>Home <span class="st st-dn">planned</span></h3><p>Would help with groceries, house help and stock. Nothing is ordered or booked without the owner's word.</p></div>
+  <div class="box"><h3>Content <span class="st st-dn">planned</span></h3><p>Would run a pipeline for short video and writing. It drafts. Nothing is published without the owner's word.</p></div>
+  <div class="box"><h3>Markets <span class="st st-dn">planned</span></h3><p>Would score trade setups for a human, who places every trade.</p></div>
+</div>
+
+<h2>The life of one task</h2>
+<figure>
+<svg viewBox="0 0 380 300" role="img" aria-labelledby="t3 d3">
+  <title id="t3">Brief to completion gate</title>
+  <desc id="d3">Four steps in order: brief, worktree, report, completion gate. If the owner must decide something, the gate holds the task for the owner.</desc>
+  <defs>
+    <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" style="fill: var(--soft)"/>
+    </marker>
+  </defs>
+  <g font-size="13">
+    <rect x="20" y="10" width="250" height="50" rx="8" class="card" style="stroke: var(--l2); stroke-width: 2"/>
+    <text x="34" y="31" font-weight="700">1 · Brief</text>
+    <text x="34" y="50" font-size="11" class="soft">intent, rules, where to write</text>
+    <rect x="20" y="80" width="250" height="50" rx="8" class="card" style="stroke: var(--l2); stroke-width: 2"/>
+    <text x="34" y="101" font-weight="700">2 · Worktree</text>
+    <text x="34" y="120" font-size="11" class="soft">a clean, disposable git copy</text>
+    <rect x="20" y="150" width="250" height="50" rx="8" class="card" style="stroke: var(--l2); stroke-width: 2"/>
+    <text x="34" y="171" font-weight="700">3 · Report or pull request</text>
+    <text x="34" y="190" font-size="11" class="soft">evidence, commands run, files read</text>
+    <rect x="20" y="220" width="250" height="50" rx="8" class="card" style="stroke: var(--l6); stroke-width: 2"/>
+    <text x="34" y="241" font-weight="700">4 · Completion gate</text>
+    <text x="34" y="260" font-size="11" class="soft">open owner questions? hold them</text>
+  </g>
+  <path d="M145 60 V 78" class="wire" marker-end="url(#a3)"/>
+  <path d="M145 130 V 148" class="wire" marker-end="url(#a3)"/>
+  <path d="M145 200 V 218" class="wire" marker-end="url(#a3)"/>
+  <path d="M270 245 H 300" class="wire" marker-end="url(#a3)"/>
+  <rect x="302" y="226" width="70" height="38" rx="6" class="card"/>
+  <text x="337" y="244" text-anchor="middle" font-size="11">owner</text>
+  <text x="337" y="258" text-anchor="middle" font-size="11">decides</text>
+  <text x="20" y="292" font-size="11" class="soft">Status lines go to the task's status file at each phase change.</text>
+</svg>
+<figcaption>Brief → worktree → report → completion gate. A task is not done while the owner still owes it a decision.</figcaption>
+</figure>
+
+<h2>The completion gate</h2>
+<p>Upstream Firstmate treats an owner decision as a task that waits for the owner. A worker does not close a task while such a question is open. It asks the supervisor to record the question first. When nothing waits on the owner, the worker runs one command that says so. The design is in upstream <code>docs/captain-hold-lifecycle.md</code>.</p>
+
+<h2>Worked example: this site</h2>
+<p>This page was built by a scout. Here is its brief, cleaned:</p>
+<pre>Intent:  The owner approved an outline for a showcase.
+         Section 1 is a new page. Link to the old one.
+Spec:    Write only in the site folder.
+         One page per section, light and dark, phone safe.
+         Remove personal details. Credit upstream.
+         Section 9 must be blunt.
+Rules:   Never push. Never open a pull request.
+         One status line per phase change.
+         Ask before anything the owner must decide.
+Done:    A report with evidence, a privacy self-scan,
+         and a review page for the owner.</pre>
+<p>What the scout did:</p>
+<ol>
+  <li>Read the inventory report that came before it.</li>
+  <li>Checked each "works today" claim with a command (for example, the test runners and the job list).</li>
+  <li>Wrote these pages in its own words.</li>
+  <li>Scanned its own pages for private terms and wrote counts only.</li>
+  <li>Opened the index page in a review tool for the owner.</li>
+</ol>
+
+<h2>Status</h2>
+<p><span class="st st-ok">working</span> Briefs, worktrees, status files and reports. Evidence: this task.</p>
+<p><span class="st st-dn">designed, not proven</span> The full ship path with the pre-push gate (<code>no-mistakes</code>) was not run for this site.</p>
+
+</main>
+</body>
+</html>

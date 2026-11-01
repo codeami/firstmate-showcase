@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>The First Mate Story</title>
+<meta name="description" content="A mock chat with the orchestrator: what is special about a harness that checks its own work.">
+<meta name="date" content="2026-11-01">
+<meta name="last-updated" content="2026-11-01">
+<link rel="stylesheet" href="style.css">
+<style>
+.story { max-width: 40rem; }
+.anim { margin: 1.2rem 0 1.6rem; }
+.anim svg { width: 100%; height: auto; display: block; }
+.anim .ink { fill: var(--ink); } .anim .soft { fill: var(--soft); }
+.anim .card { fill: var(--card); stroke: var(--line); stroke-width: 1.5; }
+.anim .line { stroke: var(--soft); stroke-width: 2; fill: none; stroke-linecap: round; }
+.anim .acc { fill: var(--accent); } .anim .okf { fill: var(--ok); }
+.anim .bot { fill: var(--sunk); stroke: var(--ink); stroke-width: 2; }
+.anim .gate { fill: none; stroke: var(--ink); stroke-width: 3; }
+.anim .tick { stroke: var(--ok); stroke-width: 4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.anim .nb { fill: var(--card); stroke: var(--ink); stroke-width: 2; }
+.anim .nbl { stroke: var(--accent); stroke-width: 3; stroke-linecap: round; }
+.anim g, .anim line, .anim path, .anim rect { transform-box: fill-box; }
+.runner { animation: run 8s ease-in-out infinite; }
+.pcard { animation: pc 8s ease-in-out infinite; }
+.greenc { animation: gc 8s ease-in-out infinite; }
+.tickg { transform-origin: center; animation: tk 8s ease-in-out infinite; }
+.bob { transform-origin: center bottom; animation: bob 2s ease-in-out infinite; }
+.bob2 { animation-delay: -.8s; }
+.cap { transform-origin: center bottom; animation: bob 3s ease-in-out infinite; }
+.nbl { transform-origin: left center; animation: fill 8s ease-out infinite; }
+.nbl:nth-of-type(3) { animation-delay: .7s; } .nbl:nth-of-type(4) { animation-delay: 1.4s; }
+.gateg { transform-origin: center bottom; animation: gt 8s ease-in-out infinite; }
+@keyframes run { 0%,10% { transform: translateX(0); } 40%,55% { transform: translateX(190px); } 85%,100% { transform: translateX(0); } }
+@keyframes pc { 0%,5% { opacity: 0; } 10%,85% { opacity: 1; } 92%,100% { opacity: 0; } }
+@keyframes gc { 0%,50% { opacity: 0; } 58%,85% { opacity: 1; } 92%,100% { opacity: 0; } }
+@keyframes tk { 0%,46% { transform: scale(0); } 54% { transform: scale(1.3); } 60%,85% { transform: scale(1); } 92%,100% { transform: scale(0); } }
+@keyframes gt { 0%,38% { transform: scale(1); } 46% { transform: scale(1.06); } 54%,100% { transform: scale(1); } }
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes fill { 0%,12% { transform: scaleX(0); } 55%,92% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .anim * { animation: none !important; }
+  .pcard { opacity: 0; } .greenc { opacity: 1; } .tickg { transform: scale(1); }
+  .runner { transform: translateX(190px); }
+}
+
+.chat { display: flex; flex-direction: column; gap: .55rem; margin: 1rem 0; }
+.chat h2 { margin: 1.6rem 0 .2rem; font-size: 1.05rem; }
+.b { max-width: 88%; padding: .6rem .85rem; border-radius: 16px; line-height: 1.45; border: 1px solid var(--line); }
+.b p { margin: 0; max-width: none; } .b p + p { margin-top: .4rem; }
+.b.v { align-self: flex-start; background: var(--sunk); border-bottom-left-radius: 4px; }
+.b.fm { align-self: flex-end; background: var(--card); border-color: var(--accent); border-bottom-right-radius: 4px; }
+.who { display: block; font: .66rem var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--soft); margin-bottom: .2rem; }
+.b.big { align-self: stretch; max-width: none; border-width: 2px; padding: 1rem 1.1rem; background: color-mix(in srgb, var(--accent) 8%, var(--card)); }
+.b.big h3 { margin: 0 0 .5rem; font: 700 1.25rem var(--serif); }
+.b.big ol { margin: .4rem 0; padding-left: 1.2rem; } .b.big li { margin: .35rem 0; max-width: none; }
+.js .b { display: none; }
+.js .b.show { display: block; animation: pop .35s ease-out; }
+.js .chat h2 { display: none; } .js .chat h2.show { display: block; }
+@keyframes pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .js .b.show { animation: none; } }
+.ctl { display: none; gap: .6rem; align-items: center; margin: 1rem 0; flex-wrap: wrap; }
+.js .ctl { display: flex; }
+.ctl button { font: .8rem var(--mono); text-transform: uppercase; letter-spacing: .05em; padding: .6rem 1.1rem;
+  border: 2px solid var(--accent); background: var(--card); color: var(--ink); border-radius: 999px; cursor: pointer; }
+.ctl button:hover, .ctl button:focus-visible { background: var(--accent); color: var(--bg); }
+.ctl .quiet { border-color: var(--line); color: var(--soft); }
+.ctl .count { font: .75rem var(--mono); color: var(--soft); }
+.js .tail { display: none; } .js .tail.show { display: block; }
+</style>
+<script src="nav.js"></script>
+</head>
+<body>
+<main class="story">
+<p class="kicker">Start here · a short chat</p>
+<h1>What is special about this harness?</h1>
+<p class="lede">A visitor asks the orchestrator, First Mate. Read it one bubble at a time. It takes about three minutes.</p>
+
+<figure class="anim">
+<svg viewBox="0 0 480 190" role="img" aria-labelledby="ta da">
+  <title id="ta">You, the workers, the check gate and the notebook</title>
+  <desc id="da">A person in a sailor's hat hands a task card to a small worker bot. The bot carries the card through a check gate. A green tick appears. The bot brings the card back. A notebook on the right fills with lines, session after session. With reduced motion, one still frame shows the card checked.</desc>
+  <path d="M10 170 H470" class="line" opacity=".5"/>
+  <!-- you, in a sailor's hat -->
+  <g class="cap">
+    <rect x="30" y="92" width="44" height="60" rx="14" class="acc"/>
+    <circle cx="52" cy="78" r="17" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/>
+    <path d="M33 70 Q52 44 71 70 Z" class="ink"/><rect x="31" y="68" width="42" height="5" rx="2" class="ink"/>
+    <circle cx="46" cy="80" r="2" class="ink"/><circle cx="58" cy="80" r="2" class="ink"/>
+    <path d="M46 88 Q52 92 58 88" class="line" stroke="var(--ink)" stroke-width="2"/>
+    <rect x="70" y="106" width="22" height="9" rx="4" class="acc"/>
+    <text x="52" y="184" text-anchor="middle" font-size="11" class="soft">you</text>
+  </g>
+  <!-- spare workers -->
+  <g class="bob"><rect x="118" y="128" width="30" height="26" rx="8" class="bot"/><circle cx="127" cy="139" r="3" class="ink"/><circle cx="139" cy="139" r="3" class="ink"/><path d="M133 128 V120" class="line"/><circle cx="133" cy="118" r="3" class="acc"/></g>
+  <g class="bob bob2"><rect x="156" y="128" width="30" height="26" rx="8" class="bot"/><circle cx="165" cy="139" r="3" class="ink"/><circle cx="177" cy="139" r="3" class="ink"/><path d="M171 128 V120" class="line"/><circle cx="171" cy="118" r="3" class="acc"/></g>
+  <!-- gate -->
+  <g class="gateg">
+    <path d="M285 154 V80 Q285 52 320 52 Q355 52 355 80 V154" class="gate"/>
+    <text x="320" y="42" text-anchor="middle" font-size="11" font-weight="700" class="ink">CHECK</text>
+  </g>
+  <g class="tickg"><circle cx="320" cy="76" r="14" fill="var(--card)" stroke="var(--ok)" stroke-width="3"/><path d="M313 76 L318 82 L328 69" class="tick"/></g>
+  <!-- runner bot with card -->
+  <g class="runner">
+    <rect x="110" y="108" width="32" height="46" rx="9" class="bot" transform="translate(0 0)"/>
+    <circle cx="120" cy="124" r="3.2" class="ink"/><circle cx="132" cy="124" r="3.2" class="ink"/>
+    <path d="M121 135 H131" class="line" stroke="var(--ink)" stroke-width="2"/>
+    <g class="pcard"><rect x="104" y="84" width="34" height="24" rx="4" class="card"/><path d="M110 92 H132 M110 99 H124" class="line"/></g>
+    <g class="greenc"><rect x="104" y="84" width="34" height="24" rx="4" class="okf" opacity=".85"/><path d="M114 96 L120 102 L130 90" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></g>
+  </g>
+  <!-- notebook -->
+  <g>
+    <rect x="395" y="70" width="64" height="84" rx="6" class="nb"/>
+    <path d="M405 70 V154" class="line" stroke="var(--accent)" stroke-width="2"/>
+    <path d="M414 92 H450" class="nbl"/><path d="M414 108 H446" class="nbl"/><path d="M414 124 H452" class="nbl"/>
+    <text x="427" y="184" text-anchor="middle" font-size="11" class="soft">memory</text>
+  </g>
+</svg>
+<figcaption>You hand over a task. A worker does it. The gate checks it. The notebook remembers.</figcaption>
+</figure>
+
+<div class="chat" id="chat" aria-live="polite">
+
+<h2>The idea</h2>
+<div class="b v"><span class="who">Visitor</span><p>Why not just use a chat with a good model?</p></div>
+<div class="b fm"><span class="who">First Mate</span><p>A model is only as good as the harness around it.</p></div>
+<div class="b v"><span class="who">Visitor</span><p>Harness?</p></div>
+<div class="b fm"><span class="who">First Mate</span><p>Everything around the model: the rules it reads, the tools it may use, the checks on its work, and the notes it keeps.</p></div>
+
+<h2>Achievement 1: built and running</h2>
+<div class="b v"><span class="who">Visitor</span><p>Is this a design, or does it run?</p></div>
+<div class="b fm big"><span class="who">First Mate</span>
+<h3>It runs. It is in daily use on the owner's machine.</h3>
+<p>This is a working system, not a plan. Proof you can check on this site: one of my workers built these very pages, and about 110 scout reports are on disk.</p>
+<p>Today four workers ran in parallel. Three each delivered a reviewed pull request on a public repo: <a href="https://github.com/codeami/firstmate-showcase/pull/1">this site</a>, <a href="https://github.com/codeami/reels4mphotos/pull/23">reels4mphotos</a> and <a href="https://github.com/codeami/swarm-referee/pull/9">swarm-referee</a>. The fourth delivered a private package.</p>
+</div>
+<div class="b fm"><span class="who">First Mate</span><p>The owner added two things of his own on top of upstream Firstmate. First, a plain-English checker in the style of STE100 (ASD-STE100 Simplified Technical English). Every scout report passes it before the scout says "done". Second, a reviewed path that moves notes from auto-memory into the curated facts file.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p>What is still only designed carries a mark. You will see those marks below.</p></div>
+
+<h2>What a plain chat does not do</h2>
+<div class="b v"><span class="who">Visitor</span><p>So what do you do that a chat does not?</p></div>
+<div class="b fm"><span class="who">First Mate</span><p><strong>I hand coding work to coding agents.</strong> Each gets one task, its own copy of the code, and a written brief. A scout finds facts. A ship changes code.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p><strong>I track your tasks.</strong> A sprint board has six phases. A task leaves a phase only when that phase's exit check is true.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p><strong>I explain myself.</strong> Every report, plan or draft for you becomes a page you can mark up. Your notes go back to the agent that wrote it.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p><strong>I extend myself, but you approve it.</strong> Skills load only when a task needs them. A tool called backpass reads old sessions and proposes edits to my rules. It never writes them.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p><span class="st st-dn">installed, not yet seen to succeed</span> The nightly backpass job is installed. It has not yet been seen to run.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p><strong>I learn and teach.</strong> Each session ends with notes: goals, decisions, and where the agent went its own way. Reports are written in short, plain sentences, and a checker flags long ones.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p><strong>General office work is planned too.</strong> The plan is staff bots for the board, the inbox and drafts. <span class="st st-dn">designed, not run</span></p></div>
+
+<h2>How it is set up</h2>
+<div class="b v"><span class="who">Visitor</span><p>How is this built?</p></div>
+<div class="b fm"><span class="who">First Mate</span><p>Four layers on top of Claude Code, which does the building.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p><strong>1. The orchestrator.</strong> That is me. I am the one point of contact. I write the briefs and start the workers.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p><strong>2. Isolated copies.</strong> Each worker gets its own git worktree. That is a separate copy of the code, so a worker cannot break your main copy.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p><strong>3. Review boards.</strong> Pages where you read the work and leave notes. You do not review in a terminal.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p><strong>4. Instruction files.</strong> One short rules file, called the map, is read first by every agent. The map is the product.</p></div>
+
+<h2>The big one</h2>
+<div class="b v"><span class="who">Visitor</span><p>Fine. But how do I know the work is right?</p></div>
+<div class="b fm big"><span class="who">First Mate</span>
+<h3>Nothing lands until it has been checked three times.</h3>
+<ol>
+  <li><strong>The worker checks its own work.</strong> It checks each claim with a command or a file read, and reports with evidence. It may not close a task while a question for you is open.</li>
+  <li><strong>The gates check it again.</strong> Hooks block unsafe actions, and shell tests check the rules. Before code is pushed, a gate runs review, tests, docs and lint. <span class="st st-dn">the full gate was not run for this site</span></li>
+  <li><strong>You give the word.</strong> Only you can merge, publish, send or spend. A card leaves Review only on your word.</li>
+</ol>
+<p>It works on me too. An earlier version of the operating manual said scouts run with permission checks on. A check found all 10 running workers had them off. The manual was fixed, and the claim is now listed as false by design. <a href="testing.html">Read the case</a>.</p>
+</div>
+<div class="b v"><span class="who">Visitor</span><p>That is a lot of checking.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p>Yes. It is the point. Until a check passes, a claim is called "in trial", never a feature.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p>One honest note: workers skip permission checks by default. A model-reviewed mode is being trialled. The page <a href="cast.html">Cast and authority</a> says more.</p></div>
+
+<h2>Memory</h2>
+<div class="b v"><span class="who">Visitor</span><p>Do you remember things between sessions?</p></div>
+<div class="b fm"><span class="who">First Mate</span><p>Not in my head. In files. Four kinds: the rules, this chat, a store of reports and notes, and an index that says where things are.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p>The index is rebuilt at the start of each session. It exists because an agent once searched the web for work that was already on disk.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p>The same rules file is linked into five tools: Claude Code, Codex, OpenCode, Gemini CLI and backpass. Change it once and all five see it next session.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p>Two parts are not working yet: saving facts before a chat is squeezed into a summary, and filing facts into a learnings file. <span class="st st-no">not working</span> <span class="st st-dn">designed, not proven</span></p></div>
+
+<h2>The vendor idea</h2>
+<div class="b v"><span class="who">Visitor</span><p>So how should I think about all this?</p></div>
+<div class="b fm"><span class="who">First Mate</span><p>The owner puts it this way: managing a complex AI agent system is sort of like managing a contract with different vendors.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p>You scope the work. You write down who may do what. You ask for status. You accept work only on evidence. You decide what happens when it goes wrong.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p>Want the detail? Start with <a href="vendors.html">Agents as vendors</a>. Then <a href="s09.html">What works today</a>, which is blunt about what does not.</p></div>
+</div>
+
+<div class="ctl" id="ctl">
+  <button type="button" id="next">Next ▸</button>
+  <button type="button" id="all" class="quiet">Show all</button>
+  <span class="count" id="count"></span>
+</div>
+<div id="sentinel" aria-hidden="true"></div>
+
+<div class="tail" id="tail">
+<div class="box key">
+<p><strong>Go deeper.</strong> <a href="vendors.html">Agents as vendors</a> · <a href="s02.html">Supervisor</a> · <a href="s03.html">Crews</a> · <a href="s06.html">Memory and index</a> · <a href="testing.html">Testing in public</a> · <a href="s09.html">What works today</a> · <a href="overview.html">The full map of six lanes</a></p>
+</div>
+<p>The supervisor and most crew mechanics are upstream <a href="https://github.com/kunchenguid/firstmate">Firstmate</a>, MIT licence, by Kun Chen and contributors. The owner built the rules, hooks, work index and review flow.</p>
+</div>
+</main>
+<script>
+(function () {
+  var root = document.documentElement;
+  var items = Array.prototype.slice.call(document.querySelectorAll("#chat > .b, #chat > h2"));
+  var tail = document.getElementById("tail");
+  if (!items.length) return;
+  root.className += " js";
+  var n = 0, last = 0, moved = false;
+  var count = document.getElementById("count");
+  var next = document.getElementById("next");
+  var bubbles = items.filter(function (e) { return e.className.indexOf("b") >= 0; }).length;
+  function shown() { return document.querySelectorAll("#chat > .b.show").length; }
+  function step() {
+    if (n >= items.length) return false;
+    var el = items[n++];
+    el.className += " show";
+    // a heading is followed at once by its first bubble
+    if (el.tagName === "H2" && n < items.length) { items[n++].className += " show"; el = items[n - 1]; }
+    count.textContent = shown() + " / " + bubbles;
+    if (n >= items.length) { tail.className += " show"; next.disabled = true; next.textContent = "The end"; }
+    return el;
+  }
+  function reveal() {
+    var el = step();
+    if (el && moved && el.scrollIntoView) {
+      var r = el.getBoundingClientRect();
+      if (r.bottom > window.innerHeight) el.scrollIntoView({ block: "end", behavior: "smooth" });
+    }
+  }
+  next.addEventListener("click", function () { moved = true; reveal(); });
+  document.getElementById("all").addEventListener("click", function () { while (n < items.length) step(); });
+  var armed = function () { moved = true; };
+  window.addEventListener("scroll", armed, { passive: true });
+  window.addEventListener("wheel", armed, { passive: true });
+  window.addEventListener("touchmove", armed, { passive: true });
+  var sentinel = document.getElementById("sentinel");
+  window.addEventListener("scroll", function () {
+    if (n >= items.length) return;
+    var now = Date.now();
+    if (now - last < 700) return;
+    if (sentinel.getBoundingClientRect().top < window.innerHeight * 0.85) { last = now; step(); }
+  }, { passive: true });
+  step();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Agents as Vendors</title>
+<meta name="description" content="Managing AI agents is like managing a contract with several vendors. Each vendor practice maps to a page of this site.">
+<meta name="date" content="2026-11-01">
+<meta name="last-updated" content="2026-11-01">
+<link rel="stylesheet" href="style.css">
+<script src="nav.js"></script>
+</head>
+<body>
+<main>
+<p class="kicker">The idea · program management</p>
+<h1>Agents as vendors</h1>
+<p class="lede">"Managing a complex AI agentic bot system is sort of like managing a contract with different vendors." <span class="lbl">The site owner</span></p>
+
+<p>A vendor does work you cannot watch all day. You do not read every line it writes. You write down what you want, check what comes back, and decide what happens when it goes wrong. This setup does the same with agents. Each row below names a vendor-management practice and the page where this setup does it.</p>
+
+<h2>The map</h2>
+<div class="tablewrap"><table>
+<tr><th>Vendor practice</th><th>What this setup does</th><th>Page</th></tr>
+<tr><td>Scoping and briefs</td><td>Every task starts as a brief: intent, spec, rules and a definition of done. A worker does one task and nothing outside the brief.</td><td><a href="s03.html">Crews</a></td></tr>
+<tr><td>Onboarding</td><td>Every agent reads the same plain-text rules file before it starts. A test asks each agent for a canary word to prove it loaded the file. The test is designed, not proven.</td><td><a href="s04.html">Context system</a></td></tr>
+<tr><td>Statement of work</td><td>The autonomy ladder and permission matrix say who may do what, and who must ask first. Only the owner holds the level that sends, publishes, spends or merges.</td><td><a href="cast.html">Cast and authority</a></td></tr>
+<tr><td>Status reporting</td><td>A worker writes one status line per phase change to its own status file. The owner reviews reports and drafts as an HTML page, not in a terminal.</td><td><a href="s02.html">Supervisor</a>, <a href="s07.html">Review surfaces</a></td></tr>
+<tr><td>Acceptance gates</td><td>A task leaves a phase only when the phase's exit check is true. A card leaves Review only on the owner's word. Validation is evidence, not opinion.</td><td><a href="tasks.html">Task management</a></td></tr>
+<tr><td>Escalation</td><td>The brief tells a worker to ask before anything the owner must decide. An owner decision is a task that waits, and a worker may not close a task while one is open.</td><td><a href="s03.html">Crews</a></td></tr>
+<tr><td>Audit of claims</td><td>A claim is written down, then the check that would prove it is run, and a bad result is kept. A claim without a passing check is "in trial", never a feature.</td><td><a href="testing.html">Testing in public</a>, <a href="s09.html">What works today</a></td></tr>
+<tr><td>Offboarding and cleanup</td><td>Each worker gets its own worktree, and a scout's worktree is thrown away after the report. Nothing a worker wrote goes out without the owner's word.</td><td><a href="s02.html">Supervisor</a></td></tr>
+</table></div>
+
+<h2>Where the analogy is thin</h2>
+<ul>
+  <li>A human vendor has its own standards. An agent has only the rules in its brief and the rules file.</li>
+  <li>A human vendor can refuse. By default, workers here skip permission checks, so the brief and the review carry the control. A model-reviewed mode is being trialled. See <a href="cast.html">Cast and authority</a>.</li>
+  <li>The staff-bot side of the setup, the part closest to a vendor roster, is designed and has not run. See <a href="tasks.html">Task management</a>.</li>
+</ul>
+
+<div class="box key">
+<p><strong>In short.</strong> Scope the work, write down who may do what, make workers report, accept work only on evidence, and name what happens when something fails. These are vendor-management habits, applied to agents.</p>
+</div>
+</main>
+</body>
+</html>

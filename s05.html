@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Hooks and Rules</title>
+<meta name="description" content="Short hook scripts turn the most important rules into checks.">
+<meta name="date" content="2026-10-30">
+<meta name="last-updated" content="2026-10-30">
+<link rel="stylesheet" href="style.css">
+<script src="nav.js"></script>
+</head>
+<body>
+<main>
+<p class="kicker">Section 5 · Lane 4 · reference</p>
+<h1>Hooks and rules lane</h1>
+<p class="lede">Rules in a text file are advice. A hook is a script the tool must run. Hooks turn the most important rules into checks.</p>
+
+<h2>The owner's Claude Code hooks</h2>
+<p>These are in the owner's Claude Code settings, checked on 2026-10-30. Each script is short bash. If a script cannot parse its input, it allows the action.</p>
+<div class="tablewrap"><table>
+<tr><th>When</th><th>Hook</th><th>What it does</th><th>Status</th></tr>
+<tr><td>Before a shell command</td><td>deny file writes through the shell</td><td>Blocks heredoc-to-file, <code>tee</code>, <code>sed -i</code> and similar. Says: use the editor tools. Text inside quotes or a commit message does not count.</td><td><span class="st st-ok">working</span></td></tr>
+<tr><td>Before a shell command</td><td>deny secret prints</td><td>Blocks commands that would print a secret to the log.</td><td><span class="st st-ok">installed</span></td></tr>
+<tr><td>When the owner sends a prompt</td><td>warn on key-shaped text</td><td>Warns if the prompt has a string shaped like a key. It never blocks and never repeats the match.</td><td><span class="st st-dn">installed, behaviour not proven</span></td></tr>
+<tr><td>When the owner sends a prompt</td><td>end-of-session reminder</td><td>If the prompt says "end of session", it reminds the agent to write a session note.</td><td><span class="st st-ok">installed</span></td></tr>
+<tr><td>Session start, before compaction</td><td>build the work index</td><td>Rebuilds a one-page index of all work folders. See <a href="s06.html">Memory and index</a>.</td><td><span class="st st-ok">working</span></td></tr>
+<tr><td>Session start</td><td>tool banners</td><td>Three small CLI tools print their state (review sessions, repo, browser).</td><td><span class="st st-ok">working</span></td></tr>
+</table></div>
+<p>A missing script is not an error: each hook checks that its script exists and exits 0 if not. This is safe, but it can hide a broken hook. One such hook pointed at a missing file until 2026-10-30. It is now removed. A read-only health checker (<code>bin/harness-check</code>) now lists hooks, jobs and plugins so this kind of gap shows up. See <a href="s09.html">What works today</a>.</p>
+
+<h2>Upstream supervisor guards</h2>
+<p>Upstream Firstmate ships its own guards for the supervisor session. The owner did not write these. Read them upstream:</p>
+<ul>
+  <li><code>docs/cd-guard.md</code>: stops a command that changes directory in an unsafe way.</li>
+  <li><code>docs/turnend-guard.md</code>: stops the supervisor from ending a turn while work has no live supervision.</li>
+  <li><code>docs/subagent-guard.md</code>: stops the supervisor from using a tool's built-in sub-agents.</li>
+</ul>
+
+<h2>Rules that stay as text</h2>
+<p>Some rules stay in the map, because a script cannot judge them well. Examples: "Drafts, not sends." "Ask before anything hard to undo." "Say when something is a guess." Agents can still break these. The review surfaces (<a href="s07.html">lane 6</a>) are where the owner catches it.</p>
+
+</main>
+</body>
+</html>
