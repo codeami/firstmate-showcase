@@ -1,18 +1,24 @@
 /* Shared shell for every page: sidebar nav, header with day/night toggle,
    draft banner, byline and previous/next links. No build step, no network.
-   To add or rename a page, edit one line in PAGES. Order here is reading order. */
+   To add or rename a page, edit one line in PAGES or MORE. Order here is reading order.
+   PAGES are the five main pages. MORE holds every other page, behind a "More" fold. */
 var DRAFT = false; // false removes the draft banner on every page
 
 var PAGES = [
   ["index.html",     "The story"],
-  ["overview.html",  "The six lanes"],
+  ["overview.html",  "How it works"],
+  ["skills.html",    "Skills"],
+  ["harness.html",   "Harness flow"],
+  ["s09.html",       "What works today"]
+];
+
+var MORE = [
+  ["maps/skills.html", "Skill map (interactive)"],
+  ["maps/flow.html", "Harness flow map (interactive)"],
   ["s02.html",       "Supervisor"],
   ["s03.html",       "Crews"],
   ["s04.html",       "Context system"],
   ["s05.html",       "Hooks and rules"],
-  ["skills.html",    "How skills work"],
-  ["maps/skills.html", "Skill map"],
-  ["maps/flow.html", "Harness flow"],
   ["s06.html",       "Memory and index"],
   ["s07.html",       "Review surfaces"],
   ["s08.html",       "Planning side"],
@@ -20,7 +26,6 @@ var PAGES = [
   ["tasks.html",     "Task management"],
   ["testing.html",   "Testing in public"],
   ["vendors.html",   "Agents as vendors"],
-  ["s09.html",       "What works today"],
   ["s10.html",       "Influences"],
   ["changelog.html", "Changelog"]
 ];
@@ -61,8 +66,13 @@ function el(tag, attrs, text) {
 
 function buildShell() {
   var here = location.pathname.split("/").pop() || "index.html";
-  var idx = -1;
+  // The pager walks the list the page is in: main pages, or the More pages.
+  var list = PAGES, idx = -1;
   for (var i = 0; i < PAGES.length; i++) if (PAGES[i][0] === here) idx = i;
+  if (idx < 0) {
+    list = MORE;
+    for (var j = 0; j < MORE.length; j++) if (MORE[j][0] === here) idx = j;
+  }
   var main = document.querySelector("main");
   if (!main) return;
 
@@ -72,11 +82,17 @@ function buildShell() {
   side.appendChild(brand);
   side.appendChild(el("div", { "class": "lbl side-sub" }, DRAFT ? "Private draft" : "Notes"));
   var nav = el("nav", { "aria-label": "Pages" });
-  PAGES.forEach(function (p, n) {
+  function link(into, p, n, inList) {
     var a = el("a", { "class": "nav", href: p[0] }, p[1]);
-    if (n === idx) a.setAttribute("aria-current", "page");
-    nav.appendChild(a);
-  });
+    if (inList === list && n === idx) a.setAttribute("aria-current", "page");
+    into.appendChild(a);
+  }
+  PAGES.forEach(function (p, n) { link(nav, p, n, PAGES); });
+  var more = el("details", { "class": "more" });
+  if (list === MORE && idx >= 0) more.open = true;
+  more.appendChild(el("summary", { "class": "nav" }, "More"));
+  MORE.forEach(function (p, n) { link(more, p, n, MORE); });
+  nav.appendChild(more);
   side.appendChild(nav);
 
   var col = el("div", { "class": "col" });
@@ -86,7 +102,7 @@ function buildShell() {
     var open = app.classList.toggle("nav-open");
     menu.setAttribute("aria-expanded", open ? "true" : "false");
   });
-  var where = el("span", { "class": "lbl where" }, idx >= 0 ? PAGES[idx][1] : "");
+  var where = el("span", { "class": "lbl where" }, idx >= 0 ? list[idx][1] : "");
   var toggle = el("button", { "class": "theme", type: "button" });
   function label() {
     var dark = currentTheme() === "dark";
@@ -121,8 +137,8 @@ function buildShell() {
 
   if (idx >= 0) {
     var pager = el("nav", { "class": "pager", "aria-label": "Previous and next" });
-    pager.appendChild(idx > 0 ? el("a", { href: PAGES[idx - 1][0], rel: "prev" }, "← " + PAGES[idx - 1][1]) : el("span"));
-    pager.appendChild(idx < PAGES.length - 1 ? el("a", { href: PAGES[idx + 1][0], rel: "next" }, PAGES[idx + 1][1] + " →") : el("span"));
+    pager.appendChild(idx > 0 ? el("a", { href: list[idx - 1][0], rel: "prev" }, "← " + list[idx - 1][1]) : el("span"));
+    pager.appendChild(idx < list.length - 1 ? el("a", { href: list[idx + 1][0], rel: "next" }, list[idx + 1][1] + " →") : el("span"));
     main.appendChild(pager);
   }
 }

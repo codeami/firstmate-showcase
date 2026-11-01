@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Harness Flow</title>
+<meta name="description" content="One task from the ask to the notebook, and the checks it meets: hooks, review pages and tests.">
+<meta name="date" content="2026-11-01">
+<link rel="stylesheet" href="style.css">
+<script src="nav.js"></script>
+</head>
+<body>
+<main>
+<p class="kicker">Harness flow</p>
+<h1>How one task is checked</h1>
+<p class="lede">Follow one task from the owner's ask to the notebook. Nothing lands until it has been checked three times.</p>
+
+<div class="box key">
+<p><strong>See it as a picture.</strong> The <a href="maps/flow.html">Harness flow map</a> shows each step. A heavy outline means the owner decides. A green fill means the supervisor reads real state. It does not take a worker's word. Click any step.</p>
+</div>
+
+<h2 id="parts">One task, six parts</h2>
+<ol>
+  <li><strong>Ask.</strong> The owner asks in plain words. The supervisor sorts the ask.</li>
+  <li><strong>Instruct.</strong> The supervisor writes a brief. Then it starts one worker in its own copy of the code.</li>
+  <li><strong>Run.</strong> The worker works. Short status lines say where it is.</li>
+  <li><strong>Check.</strong> The supervisor reads real state: git, the forge and the files.</li>
+  <li><strong>Decide and land.</strong> The owner decides. Only then does the work land.</li>
+  <li><strong>Remember.</strong> Keep what was learned, after review.</li>
+</ol>
+
+<h2 id="three">Three checks</h2>
+<ol>
+  <li><strong>The worker checks its own work.</strong> It checks each claim with a command or a file read. It reports with evidence. It may not close a task while a question for the owner is open.</li>
+  <li><strong>The gates check it again.</strong> Hooks block unsafe actions. Shell tests check the rules. Before code is pushed, a gate runs review, tests, docs and lint. <span class="st st-dn">the full gate was not run for this site</span></li>
+  <li><strong>The owner gives the word.</strong> Only the owner can merge, publish, send or spend.</li>
+</ol>
+
+<h2 id="hooks">Hooks turn rules into checks</h2>
+<p>A rule in a text file is advice. A hook is a script the tool must run. Hooks turn the most important rules into checks.</p>
+<p>The owner's Claude Code hooks, checked on 2026-10-30:</p>
+<ul>
+  <li><strong>Before a shell command:</strong> block file writes through the shell, and say "use the editor tools". This works. It blocked commands in the scout's own session.</li>
+  <li><strong>Before a shell command:</strong> block commands that would print a secret. <span class="st st-dn">installed, not proven</span></li>
+  <li><strong>When the owner sends a prompt:</strong> warn on text shaped like a key. It never blocks. <span class="st st-dn">installed, not proven</span></li>
+  <li><strong>When the owner says "end of session":</strong> remind the agent to write a session note.</li>
+  <li><strong>At session start:</strong> rebuild a one-page index of all work folders.</li>
+</ul>
+<p>Each hook allows the action if its script is missing. That is safe, but it can hide a broken hook. A read-only health checker now lists hooks, jobs and plugins, so such a gap shows up.</p>
+<p>Upstream Firstmate adds its own guards for the supervisor. Some rules stay as text, because a script cannot judge them. "Drafts, not sends" is one. The owner catches those in review.</p>
+
+<h2 id="review">The owner reviews pages, not a terminal</h2>
+<p>Every report, plan or draft for the owner becomes an HTML page. A page can hold a diagram, a table and evidence on one screen.</p>
+<pre>agent writes page.html
+  → review tool opens it for the owner
+  → owner marks text, writes notes
+  → notes go back to the agent
+  → agent edits the page, asks again
+  → owner approves, or ends the review</pre>
+<p>The review tool is Lavish, by Kun Chen. It works, and this site was reviewed there.</p>
+<p><span class="st st-dn">designed, not proven</span> A weekday morning job that rebuilds the owner's cockpit page. The page itself works by hand. Bearings, an upstream view of what waits on the owner, was not run for this site.</p>
+
+<h2 id="tests">Checks that proved the setup wrong</h2>
+<p>A claim is worth only the check behind it. Two checks found the setup wrong. Both stay on the site on purpose.</p>
+<h3>A plain-English rule broke a test</h3>
+<p>Scouts must now run a plain-English checker before they say "done". That checker lives in the owner's context system. A test says the supervisor must never point back at that system. So the test now fails: 36 pass, 1 fail. The owner keeps the failing test. It reports a real trade-off.</p>
+<h3>"Scouts run with permission checks on" was false</h3>
+<p>An earlier manual said so. A check counted the flags on the running workers. All 10 skipped permission checks. Skipping is the standing default. The manual now says so. <span class="st st-dn">designed</span> A safer, model-reviewed mode is a one-line switch. It is not switched on.</p>
+<h3>The pattern</h3>
+<ul>
+  <li>Write the claim down.</li>
+  <li>Name the check that would prove it.</li>
+  <li>Run the check, and keep the result even when it is bad.</li>
+  <li>Until a check passes, call the claim "in trial", never a feature.</li>
+</ul>
+
+<h2 id="more">Go deeper</h2>
+<p>The full detail pages: <a href="s05.html">Hooks and rules</a> · <a href="s07.html">Review surfaces</a> · <a href="testing.html">Testing in public</a> · <a href="cast.html">Cast and authority</a>.</p>
+<p>Next: <a href="s09.html">What works today</a>.</p>
+</main>
+</body>
+</html>

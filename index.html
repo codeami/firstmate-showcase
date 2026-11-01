@@ -133,10 +133,10 @@
 <div class="b v"><span class="who">Visitor</span><p>Is this a design, or does it run?</p></div>
 <div class="b fm big"><span class="who">First Mate</span>
 <h3>It runs. It is in daily use on the owner's machine.</h3>
-<p>This is a working system, not a plan. Proof you can check on this site: one of my workers built these very pages, and about 110 scout reports are on disk.</p>
-<p>Today four workers ran in parallel. Three each delivered a reviewed pull request on a public repo: <a href="https://github.com/codeami/firstmate-showcase/pull/1">this site</a>, <a href="https://github.com/codeami/reels4mphotos/pull/23">reels4mphotos</a> and <a href="https://github.com/codeami/swarm-referee/pull/9">swarm-referee</a>. The fourth delivered a private package.</p>
+<p>One of my workers built these pages. About 110 scout reports are on disk.</p>
+<p>On one day, four workers ran in parallel. Three delivered a reviewed pull request: <a href="https://github.com/codeami/firstmate-showcase/pull/1">this site</a>, <a href="https://github.com/codeami/reels4mphotos/pull/23">reels4mphotos</a> and <a href="https://github.com/codeami/swarm-referee/pull/9">swarm-referee</a>.</p>
 </div>
-<div class="b fm"><span class="who">First Mate</span><p>The owner added two things of his own on top of upstream Firstmate. First, a plain-English checker in the style of STE100 (ASD-STE100 Simplified Technical English). Every scout report passes it before the scout says "done". Second, a reviewed path that moves notes from auto-memory into the curated facts file.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p>The owner added two things on top of upstream Firstmate. A plain-English checker runs on every scout report. And notes reach the curated facts file only after review.</p></div>
 <div class="b fm"><span class="who">First Mate</span><p>What is still only designed carries a mark. You will see those marks below.</p></div>
 
 <h2>What a plain chat does not do</h2>
@@ -162,11 +162,11 @@
 <div class="b fm big"><span class="who">First Mate</span>
 <h3>Nothing lands until it has been checked three times.</h3>
 <ol>
-  <li><strong>The worker checks its own work.</strong> It checks each claim with a command or a file read, and reports with evidence. It may not close a task while a question for you is open.</li>
-  <li><strong>The gates check it again.</strong> Hooks block unsafe actions, and shell tests check the rules. Before code is pushed, a gate runs review, tests, docs and lint. <span class="st st-dn">the full gate was not run for this site</span></li>
-  <li><strong>You give the word.</strong> Only you can merge, publish, send or spend. A card leaves Review only on your word.</li>
+  <li><strong>The worker checks its own work.</strong> It backs each claim with a command or a file read.</li>
+  <li><strong>The gates check it again.</strong> Hooks block unsafe actions. Tests check the rules. <span class="st st-dn">the full pre-push gate was not run for this site</span></li>
+  <li><strong>You give the word.</strong> Only you can merge, publish, send or spend.</li>
 </ol>
-<p>It works on me too. An earlier version of the operating manual said scouts run with permission checks on. A check found all 10 running workers had them off. The manual was fixed, and the claim is now listed as false by design. <a href="testing.html">Read the case</a>.</p>
+<p>It works on me too. The manual once said scouts run with permission checks on. A check found all 10 running workers had them off. The manual was fixed. <a href="harness.html#tests">Read the case</a>.</p>
 </div>
 <div class="b v"><span class="who">Visitor</span><p>That is a lot of checking.</p></div>
 <div class="b fm"><span class="who">First Mate</span><p>Yes. It is the point. Until a check passes, a claim is called "in trial", never a feature.</p></div>
@@ -177,14 +177,14 @@
 <div class="b fm"><span class="who">First Mate</span><p>Not in my head. In files. Four kinds: the rules, this chat, a store of reports and notes, and an index that says where things are.</p></div>
 <div class="b fm"><span class="who">First Mate</span><p>The index is rebuilt at the start of each session. It exists because an agent once searched the web for work that was already on disk.</p></div>
 <div class="b fm"><span class="who">First Mate</span><p>The same rules file is linked into five tools: Claude Code, Codex, OpenCode, Gemini CLI and backpass. Change it once and all five see it next session.</p></div>
-<div class="b fm"><span class="who">First Mate</span><p>Two parts are not working yet: saving facts before a chat is squeezed into a summary, and filing facts into a learnings file. <span class="st st-no">not working</span> <span class="st st-dn">designed, not proven</span></p></div>
+<div class="b fm"><span class="who">First Mate</span><p>Two parts do not work yet. One saves facts before a chat is squeezed into a summary. The other files facts into a learnings file. <span class="st st-no">not working</span> <span class="st st-dn">designed, not proven</span></p></div>
 
 <h2>The vendor idea</h2>
 <div class="b v"><span class="who">Visitor</span><p>So how should I think about all this?</p></div>
 <div class="b fm"><span class="who">First Mate</span><p>The owner puts it this way: managing a complex AI agent system is sort of like managing a contract with different vendors.</p></div>
 <div class="b fm"><span class="who">First Mate</span><p>You scope the work. You write down who may do what. You ask for status. You accept work only on evidence. You decide what happens when it goes wrong.</p></div>
-<div class="b fm"><span class="who">First Mate</span><p>Want the detail? Start with <a href="vendors.html">Agents as vendors</a>. Then <a href="s09.html">What works today</a>, which is blunt about what does not.</p></div>
-<div class="b fm"><span class="who">First Mate</span><p>Prefer a picture? Two maps. The <a href="maps/skills.html">Skill map</a> shows the lanes, the skills and the guards. The <a href="maps/flow.html">Harness flow</a> follows one task from the ask to the notebook, and marks where the owner decides and where evidence is read, not trusted.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p>Want the detail? Read <a href="overview.html">How it works</a> next. <a href="s09.html">What works today</a> is blunt about what does not.</p></div>
+<div class="b fm"><span class="who">First Mate</span><p>Prefer a picture? The <a href="maps/skills.html">Skill map</a> shows the skills. The <a href="maps/flow.html">Harness flow map</a> follows one task from the ask to the notebook.</p></div>
 </div>
 
 <div class="ctl" id="ctl">
@@ -196,7 +196,8 @@
 
 <div class="tail" id="tail">
 <div class="box key">
-<p><strong>Go deeper.</strong> <a href="vendors.html">Agents as vendors</a> · <a href="s02.html">Supervisor</a> · <a href="s03.html">Crews</a> · <a href="s06.html">Memory and index</a> · <a href="testing.html">Testing in public</a> · <a href="s09.html">What works today</a> · <a href="overview.html">The full map of six lanes</a></p>
+<p><strong>Read on.</strong> <a href="overview.html">How it works</a> · <a href="skills.html">Skills</a> · <a href="harness.html">Harness flow</a> · <a href="s09.html">What works today</a></p>
+<p>Every other page, such as <a href="vendors.html">Agents as vendors</a>, is under "More" in the menu.</p>
 </div>
 <p>The supervisor and most crew mechanics are upstream <a href="https://github.com/kunchenguid/firstmate">Firstmate</a>, MIT licence, by Kun Chen and contributors. The owner built the rules, hooks, work index and review flow.</p>
 </div>
