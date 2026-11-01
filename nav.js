@@ -16,6 +16,7 @@ var PAGES = [
 var MORE = [
   ["maps/skills.html", "Skill map (interactive)"],
   ["maps/flow.html", "Harness flow map (interactive)"],
+  ["brain/index.html", "Second brain"],
   ["s02.html",       "Supervisor"],
   ["s03.html",       "Crews"],
   ["s04.html",       "Context system"],
