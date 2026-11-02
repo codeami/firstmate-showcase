@@ -8,7 +8,7 @@
     "unknown": "Ha, I'd love to chat freely, but on this page I'm a script, not a live bot. Type tour to start again, or pick a button."
   },
   "chat": {
-    "about": "The home page chat. Each node is one bot turn: one true fact, a see-how link, and the next topics. The page shows three options, the first three in next not yet opened. Folders group the review-later checklist and the map.",
+    "about": "The home page chat. Each node is one bot turn: one true fact, a see-how link, and the next topics. A node with brief true also shows the intent block's example brief. The page shows three options, the first three in next not yet opened. Folders group the review-later checklist and the map.",
     "hello": "Hey out there! I'm EA-bot, a small helper bot with a big notebook. No typing needed: pick one of three, or save one for later.",
     "folders": [
       { "id": "work", "title": "How I work" },
@@ -28,7 +28,14 @@
         "id": "work", "folder": "work", "title": "Jobs side by side", "chip": "How do you get work done?",
         "fact": "Give me ten to-dos at once and I split them into jobs and run them side by side. Ten workers at once has been done on the owner's machine.",
         "see": { "label": "Harness flow", "href": "harness.html" },
-        "next": ["worktree", "pipeline", "models", "running"]
+        "next": ["intent", "worktree", "pipeline", "models", "running"]
+      },
+      {
+        "id": "intent", "folder": "work", "title": "Intent, not steps", "chip": "How do I ask for something?",
+        "fact": "You describe what done looks like, and the crew picks how. Here is an example brief.",
+        "brief": true,
+        "see": { "label": "Tour: intent engineering", "href": "tour/index.html#intent" },
+        "next": ["pipeline", "worktree", "buttons"]
       },
       {
         "id": "worktree", "folder": "work", "title": "A copy each", "chip": "Why don't workers collide?",
@@ -40,7 +47,7 @@
         "id": "pipeline", "folder": "work", "title": "One brief, one task", "chip": "What does a worker get?",
         "fact": "Every job becomes a written brief with one task and a check for done. The board has six phases, and a task leaves a phase only when that phase's exit check is true.",
         "see": { "label": "Core logic: the pipeline", "href": "core.html#pipeline" },
-        "next": ["worktree", "models", "scripts", "running"]
+        "next": ["intent", "worktree", "models", "scripts", "running"]
       },
       {
         "id": "models", "folder": "work", "title": "Not tied to one model", "chip": "Which AI model are you?",
@@ -175,7 +182,8 @@
     "links": [
       { "label": "Capability", "href": "#capability" },
       { "label": "Security", "href": "#security" },
-      { "label": "Performance", "href": "#performance" }
+      { "label": "Performance", "href": "#performance" },
+      { "label": "How to ask", "href": "#intent" }
     ],
     "charter_lead": "Now our deal. I call it the charter."
   },
@@ -241,6 +249,25 @@
     "text": "Right, {you}. Two things I'm best at. Pick one: see how it works step by step, or just use it with one prompt.",
     "headline": ["organize", "knowledge"],
     "more": "More ways in"
+  },
+  "intent": {
+    "id": "intent",
+    "title": "How to ask: intent, not steps",
+    "line": "You describe what done looks like, and the crew picks how.",
+    "lead": "Every job starts as a brief with two parts. The top is the owner's own words, kept as they said them. The bottom is how Firstmate turns that into a worker's task. This one is an example written for this page.",
+    "brief": {
+      "intent": { "label": "Captain's intent", "text": "Make the hub links open on my phone. Half of them do nothing when I tap them." },
+      "spec": {
+        "label": "Firstmate spec",
+        "points": [
+          "Open the hub page at phone width (375px) and tap every link.",
+          "Fix the links that do nothing so each opens its page.",
+          "Done when: every link opens at 375px, with a screenshot as proof.",
+          "Must not: change where a working link goes. One pull request; the owner decides the merge."
+        ]
+      }
+    },
+    "credit": { "label": "Daniel Miessler: From Prompt Engineering to Intent Engineering", "href": "https://danielmiessler.com/blog/intent-engineering" }
   },
   "trust": {
     "title": "Capability, security and performance",
