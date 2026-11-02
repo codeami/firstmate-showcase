@@ -3,90 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light dark">
-<title>Cast and Authority</title>
-<meta name="description" content="Who may do what: seats, the A0 to A3 ladder and the permission matrix.">
-<meta name="date" content="2026-10-31">
-<meta name="last-updated" content="2026-10-31">
-<link rel="stylesheet" href="style.css">
-<script src="nav.js"></script>
+<title>This page has moved</title>
+<meta http-equiv="refresh" content="0; url=https://codeami.github.io/ai-life-os/about.html">
+<link rel="canonical" href="https://codeami.github.io/ai-life-os/about.html">
+<meta name="robots" content="noindex">
+<script>location.replace("https://codeami.github.io/ai-life-os/about.html" + location.search + (location.hash || ""));</script>
 </head>
 <body>
-<main>
-<p class="kicker">Authority · from the operating manual, version 0.5</p>
-<h1>Cast and authority</h1>
-<p class="lede">The setup has an operating manual. It defines authority, not behaviour: who may do what, and who must ask first.</p>
-<p class="lbl">Marks: <span class="st st-ok">verified</span> = checked on disk or in a running process · <span class="st st-dn">designed</span> = written down, not shown to work. The manual's own status is "designed, not proven".</p>
-
-<h2>Two engines</h2>
-<p>The manual splits the work between two engines. A software engine does code: branches, worktrees, crews. A staff engine would do the board, the inbox, the calendar and publishing.</p>
-<p>The software engine runs today: <span class="st st-ok">verified</span>.</p>
-<p>The staff engine has not run: <span class="st st-dn">designed</span>.</p>
-
-<h2>The cast</h2>
-<p>A role is a seat, not a bot. One bot may hold two seats until the volume of work justifies two bots.</p>
-<div class="tablewrap"><table>
-<tr><th>Seat</th><th>Owns</th><th>Never touches</th><th>State</th></tr>
-<tr><td>Director</td><td>Code, branches, worktrees, releases, crew dispatch</td><td>Inbox, calendar, publishing, money</td><td><span class="st st-ok">verified</span> the supervisor holds it</td></tr>
-<tr><td>Chief of Staff</td><td>The board, intake, the daily brief, the blog pipeline</td><td>Repos, code, deploys</td><td><span class="st st-dn">designed</span></td></tr>
-<tr><td>Editor</td><td>Drafts in the owner's voice, from the owner's material</td><td>Publishing, uncited facts, code</td><td><span class="st st-dn">designed</span></td></tr>
-<tr><td>Analyst</td><td>Evidence: market, competitors, prices</td><td>Recommendations, commitments</td><td><span class="st st-dn">designed</span></td></tr>
-<tr><td>CMO</td><td>Positioning, channels, who to build for</td><td>Primary research, spend</td><td><span class="st st-dn">designed</span> A persistent mate holds it. Running not checked.</td></tr>
-<tr><td>CPO</td><td>Roadmap, scope, what not to build</td><td>Builds, pricing</td><td><span class="st st-dn">designed</span> A persistent mate holds it. Running not checked.</td></tr>
-<tr><td>CFO</td><td>Budget, price, cost tracking, spend approval</td><td>Repos, publishing, hiring</td><td><span class="st st-dn">designed</span> A persistent mate holds it. Running not checked.</td></tr>
-<tr><td>Crewmates and scouts</td><td>One task, one worktree</td><td>Anything outside the brief</td><td><span class="st st-ok">verified</span></td></tr>
-<tr><td>Runners</td><td>One bounded lookup in the staff domain</td><td>Code, repos</td><td><span class="st st-dn">designed</span></td></tr>
-</table></div>
-
-<h3>Rules that travel with the business seats</h3>
-<ul>
-  <li><strong>CMO:</strong> evidence or silence. A market size with no source is not a market size. Every recommendation names what would prove it wrong.</li>
-  <li><strong>CPO:</strong> compare designs with real products. A feature with no user problem behind it is argued against. Design waits until the market question is closed.</li>
-  <li><strong>CFO:</strong> a number without its assumptions is not a number. Model the downside first. Runway, price and cost base are owner inputs, never invented.</li>
-</ul>
-
-<h2>The autonomy ladder</h2>
-<div class="tablewrap"><table>
-<tr><th>Level</th><th>Meaning</th></tr>
-<tr><td>A0</td><td>Observe only.</td></tr>
-<tr><td>A1</td><td>Draft. The draft waits in Review for the owner.</td></tr>
-<tr><td>A2</td><td>Act on internal state, alone.</td></tr>
-<tr><td>A3</td><td>Act outside: send, publish, spend, merge. Only the owner holds A3.</td></tr>
-</table></div>
-<p>"Ask" is not a level. It means: propose one specific action, then wait for the owner's word. A3 is never given to a role. The owner grants it to one approved action, once.</p>
-
-<h2>The permission matrix (part)</h2>
-<div class="tablewrap"><table>
-<tr><th>Action</th><th>Director</th><th>Chief of Staff</th><th>CMO</th><th>CPO</th><th>CFO</th><th>Owner</th></tr>
-<tr><td>Edit a branch or worktree</td><td>A2</td><td>—</td><td>—</td><td>—</td><td>—</td><td>A3</td></tr>
-<tr><td>Merge to main, push to a shared remote</td><td>ask</td><td>—</td><td>—</td><td>—</td><td>—</td><td>A3</td></tr>
-<tr><td>Spawn a crewmate or scout</td><td>A2</td><td>—</td><td>—</td><td>—</td><td>—</td><td>A3</td></tr>
-<tr><td>Promote a scout to a ship</td><td>ask</td><td>—</td><td>—</td><td>—</td><td>—</td><td>A3</td></tr>
-<tr><td>Move a board card</td><td>—</td><td>A2</td><td>—</td><td>—</td><td>—</td><td>A3</td></tr>
-<tr><td>Draft a post</td><td>—</td><td>A1</td><td>A1</td><td>—</td><td>—</td><td>A3</td></tr>
-<tr><td>Publish a post</td><td>—</td><td>—</td><td>ask</td><td>—</td><td>—</td><td>A3</td></tr>
-<tr><td>Message a third party</td><td>—</td><td>ask</td><td>ask</td><td>—</td><td>ask</td><td>A3</td></tr>
-<tr><td>Set a price</td><td>—</td><td>—</td><td>ask</td><td>—</td><td>A1</td><td>A3</td></tr>
-<tr><td>Change roadmap scope</td><td>—</td><td>—</td><td>—</td><td>A1</td><td>—</td><td>A3</td></tr>
-<tr><td>Approve spend inside the budget</td><td>—</td><td>—</td><td>—</td><td>—</td><td>A2</td><td>A3</td></tr>
-</table></div>
-<p><span class="st st-dn">designed</span> Only the Director rows apply today. The supervisor's briefs state them as rules. The other rows wait for the staff engine.</p>
-
-<h2>Seven invariants</h2>
-<ol>
-  <li>A3 is never granted to a role.</li>
-  <li>The board is the only queue.</li>
-  <li>One owner per card.</li>
-  <li>No card leaves Review without the owner's word.</li>
-  <li>Staff roles hold no code-write access.</li>
-  <li>No live calls between the two engines. One-way delivery is allowed.</li>
-  <li>No completed charter, no run.</li>
-</ol>
-
-<h2>Permission posture today</h2>
-<p>A model-reviewed mode is being trialled. It is not the default yet.</p>
-<p><span class="st st-ok">verified</span> Every worker the software engine starts skips permission checks. This is the standing default when no mode file exists. On 2026-10-31, the mode file did not exist, and all 10 running Claude worker sessions carried the bypass flag.</p>
-<p><span class="st st-dn">designed</span> One line in one local file switches every later launch to a model-reviewed mode. In that mode, a model reviews each tool call. That mode depends on a separate settings block that is still under review. Until the switch is on, the manual's target deny rules (no push, no edits to <code>.git</code>) are not in force for scouts. How this was checked is on <a href="testing.html">Testing in public</a>.</p>
-</main>
+<p>This page has moved to <a href="https://codeami.github.io/ai-life-os/about.html">https://codeami.github.io/ai-life-os/about.html</a>.</p>
 </body>
 </html>
