@@ -48,14 +48,6 @@
 
 .chat { display: flex; flex-direction: column; gap: .55rem; margin: 1rem 0; }
 .chat h2 { margin: 1.6rem 0 .2rem; font-size: 1.05rem; }
-.b { max-width: 88%; padding: .6rem .85rem; border-radius: 16px; line-height: 1.45; border: 1px solid var(--line); }
-.b p { margin: 0; max-width: none; } .b p + p { margin-top: .4rem; }
-.b.v { align-self: flex-start; background: var(--sunk); border-bottom-left-radius: 4px; }
-.b.fm { align-self: flex-end; background: var(--card); border-color: var(--accent); border-bottom-right-radius: 4px; }
-.who { display: block; font: .66rem var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--soft); margin-bottom: .2rem; }
-.b.big { align-self: stretch; max-width: none; border-width: 2px; padding: 1rem 1.1rem; background: color-mix(in srgb, var(--accent) 8%, var(--card)); }
-.b.big h3 { margin: 0 0 .5rem; font: 700 1.25rem var(--serif); }
-.b.big ol { margin: .4rem 0; padding-left: 1.2rem; } .b.big li { margin: .35rem 0; max-width: none; }
 .js .b { display: none; }
 .js .b.show { display: block; animation: pop .35s ease-out; }
 .js .chat h2 { display: none; } .js .chat h2.show { display: block; }
@@ -77,6 +69,7 @@
 <p class="kicker">Start here · a short chat</p>
 <h1>What is special about this harness?</h1>
 <p class="lede">A visitor asks the orchestrator, First Mate. Read it one bubble at a time. It takes about three minutes.</p>
+<p>Prefer to try it? Take the <a href="tour/index.html">guided tour</a>: a short string of prompts you can copy and use.</p>
 
 <figure class="anim">
 <svg viewBox="0 0 480 190" role="img" aria-labelledby="ta da">
@@ -196,7 +189,7 @@
 
 <div class="tail" id="tail">
 <div class="box key">
-<p><strong>Read on.</strong> <a href="overview.html">How it works</a> · <a href="skills.html">Skills</a> · <a href="harness.html">Harness flow</a> · <a href="s09.html">What works today</a></p>
+<p><strong>Read on.</strong> <a href="tour/index.html">Guided tour</a> · <a href="overview.html">How it works</a> · <a href="skills.html">Skills</a> · <a href="harness.html">Harness flow</a> · <a href="s09.html">What works today</a></p>
 <p>Every other page, such as <a href="vendors.html">Agents as vendors</a>, is under "More" in the menu.</p>
 </div>
 <p>The supervisor and most crew mechanics are upstream <a href="https://github.com/kunchenguid/firstmate">Firstmate</a>, MIT licence, by Kun Chen and contributors. The owner built the rules, hooks, work index and review flow.</p>

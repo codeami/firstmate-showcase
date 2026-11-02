@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Guided Tour</title>
+<meta name="description" content="A guided tour of First Mate: a charter, three paths and a string of prompts you can copy and try.">
+<meta name="date" content="2026-11-02">
+<meta name="site-root" content="../">
+<link rel="stylesheet" href="../style.css">
+<style>
+/* The tour is drawn from tour.json. Bubbles come from style.css. */
+.chat { display: flex; flex-direction: column; gap: .55rem; margin: 1rem 0; }
+.b { animation: pop .3s ease-out; }
+@keyframes pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .b { animation: none; } }
+.b.big h3 { font-size: 1.15rem; }
+.b .lbl { margin-bottom: .3rem; }
+.b .st { margin-left: .3rem; vertical-align: middle; }
+.charter ol { font: 500 1.05rem/1.45 var(--serif); }
+.charter .third { font: 600 1.05rem/1.45 var(--serif); margin-top: .6rem; }
+
+.acts { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .7rem; }
+.act, .copy, .play { font: .74rem var(--mono); text-transform: uppercase; letter-spacing: .05em; padding: .55rem .9rem;
+  border: 2px solid var(--accent); background: var(--card); color: var(--ink); border-radius: 999px; min-height: 44px; }
+.act:hover:not(:disabled), .act:focus-visible, .copy:hover, .copy:focus-visible { background: var(--accent); color: var(--bg); }
+.act.quiet { border-color: var(--line); color: var(--soft); }
+.act:disabled { opacity: .45; cursor: default; }
+.act[aria-pressed="true"] { opacity: 1; background: var(--accent); color: var(--bg); }
+
+.choices { display: grid; gap: .7rem; margin-top: .7rem; }
+@media (min-width: 720px) { .choices { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.choice { background: var(--card); border: 1px solid var(--line); padding: .8rem .9rem; display: flex; flex-direction: column; }
+.choice h4 { margin: 0 0 .25rem; font: 600 1.05rem/1.3 var(--serif); }
+.choice p { color: var(--soft); font-size: .92rem; flex: 1; }
+.choice .acts { margin-top: .5rem; }
+
+.tech { margin-top: .6rem; border-top: 1px solid var(--line); padding-top: .4rem; }
+.tech summary { cursor: pointer; font: .72rem/2 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--accent); }
+.tech p { margin-top: .2rem; font-size: .93rem; }
+.try { margin-top: .7rem; background: var(--sunk); border-left: 3px solid var(--accent); padding: .6rem .7rem; }
+.try .head { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.try pre { margin: .4rem 0 0; padding: 0; background: none; white-space: pre-wrap; overflow-wrap: anywhere; font-size: .84rem; }
+.copy { padding: .35rem .75rem; min-height: 36px; }
+.see { margin-top: .6rem; font-size: .92rem; }
+.check { list-style: none; padding: 0; margin: .6rem 0 0; }
+.check li { display: grid; grid-template-columns: 1.6rem minmax(0, 1fr); gap: .3rem; padding: .35rem 0; border-bottom: 1px solid var(--line); }
+.check input { width: 1.1rem; height: 1.1rem; margin-top: .2rem; accent-color: var(--accent); }
+
+.replay { margin-top: .7rem; }
+.replay .note { color: var(--soft); font-size: .88rem; }
+.wins { display: grid; gap: .7rem; margin-top: .5rem; }
+@media (min-width: 720px) { .wins { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.win { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; cursor: pointer; display: flex; flex-direction: column; }
+.win .bar { display: flex; align-items: center; gap: .5rem; padding: .45rem .7rem; background: var(--sunk); border-bottom: 1px solid var(--line); }
+.win .dot { width: .55rem; height: .55rem; border-radius: 50%; background: var(--l5); flex: none; }
+.win.done .dot { background: var(--ok); }
+.win .name { font: 600 .8rem var(--mono); flex: 1; }
+.win .state { font: .66rem var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--soft); }
+.win .log { display: flex; flex-direction: column; gap: .45rem; padding: .7rem; flex: 1; }
+.win .brief { font-size: .85rem; color: var(--soft); }
+.think { font: .8rem/1.45 var(--mono); color: var(--soft); border-left: 2px dashed var(--l3); padding-left: .55rem; }
+.think b { color: var(--l3); font-weight: 600; }
+.does { font: .8rem/1.45 var(--mono); padding-left: .55rem; border-left: 2px solid var(--l5); }
+.does b { color: var(--l5); font-weight: 600; }
+.win .b { max-width: 100%; font-size: .9rem; }
+.win .end { font: .72rem var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--ok); }
+.play { margin: 0 .7rem .7rem; border-radius: 8px; }
+.play:disabled { opacity: .45; }
+
+.composer { display: flex; gap: .5rem; margin: 1.2rem 0 0; }
+.composer input { flex: 1; min-width: 0; font: 1rem var(--sans); padding: .6rem .8rem; border: 1px solid var(--line);
+  background: var(--card); color: var(--ink); border-radius: 999px; min-height: 44px; }
+.composer input:focus { outline: none; border-color: var(--accent); }
+.composer button { font: .74rem var(--mono); text-transform: uppercase; letter-spacing: .05em; padding: 0 1.1rem;
+  border: 2px solid var(--accent); background: var(--accent); color: var(--bg); border-radius: 999px; min-height: 44px; }
+</style>
+<script src="../nav.js"></script>
+</head>
+<body>
+<main>
+<p class="kicker">Guided tour · a string of prompts</p>
+<h1>Guided tour</h1>
+<p class="lede">First Mate walks you through what it does well. Each step has a plain answer, a tech answer and a prompt you can copy and try.</p>
+<p class="lbl">Bot windows are a scripted replay, not live logs. Bills and shopping are pretend.</p>
+
+<div class="chat" id="chat" aria-live="polite"></div>
+<noscript><div class="box warn"><p>The tour needs JavaScript. The script it reads is <a href="tour.json">tour.json</a>.</p></div></noscript>
+
+<form class="composer" id="composer" autocomplete="off">
+  <input id="say" name="say" aria-label="Message" placeholder="Type tour to start" enterkeyhint="send">
+  <button type="submit">Send</button>
+</form>
+</main>
+<script>
+(function () {
+  var chat = document.getElementById("chat");
+  var form = document.getElementById("composer");
+  var input = document.getElementById("say");
+  var ROOT = "../";
+  var T = null, seq = 0;
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text) n.textContent = text;
+    return n;
+  }
+  function href(h) { return /^https?:/.test(h) ? h : ROOT + h; }
+  function scroll(node) {
+    var r = node.getBoundingClientRect();
+    if (r.bottom > window.innerHeight || r.top < 0) node.scrollIntoView({ block: "start", behavior: "smooth" });
+  }
+
+  // A bubble from First Mate ("fm") or the visitor ("v"). Wide ones stretch.
+  function bubble(kind, wide) {
+    var b = el("div", "b " + kind + (wide ? " big" : ""));
+    b.appendChild(el("span", "who", kind === "fm" ? "First Mate" : "You"));
+    chat.appendChild(b);
+    return b;
+  }
+  function you(text) { bubble("v").appendChild(el("p", "", text)); }
+  function say(text) { var b = bubble("fm"); b.appendChild(el("p", "", text)); return b; }
+
+  // Action buttons. Taking one greys out the earlier ones, so the chat reads in order.
+  function act(into, label, fn, quiet) {
+    var btn = el("button", "act" + (quiet ? " quiet" : ""), label);
+    btn.type = "button";
+    btn.addEventListener("click", function () {
+      Array.prototype.forEach.call(chat.querySelectorAll(".act"), function (a) { a.disabled = true; });
+      btn.setAttribute("aria-pressed", "true");
+      fn();
+    });
+    into.appendChild(btn);
+    return btn;
+  }
+  function acts(into) { var d = el("div", "acts"); into.appendChild(d); return d; }
+
+  function copyText(text, btn) {
+    function flash(msg) { btn.textContent = msg; setTimeout(function () { btn.textContent = "Copy"; }, 1600); }
+    function fallback() {
+      var ta = el("textarea"); ta.value = text; ta.setAttribute("readonly", "");
+      ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select();
+      var ok = false; try { ok = document.execCommand("copy"); } catch (e) { /* select by hand */ }
+      document.body.removeChild(ta); flash(ok ? "Copied" : "Select it");
+    }
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(function () { flash("Copied"); }, fallback);
+    else fallback();
+  }
+  function tryBox(into, label, text) {
+    var box = el("div", "try"), head = el("div", "head");
+    head.appendChild(el("span", "lbl", label));
+    var btn = el("button", "copy", "Copy"); btn.type = "button";
+    btn.setAttribute("aria-label", "Copy this prompt");
+    btn.addEventListener("click", function () { copyText(text, btn); });
+    head.appendChild(btn); box.appendChild(head);
+    box.appendChild(el("pre", "", text));
+    into.appendChild(box);
+  }
+  function seeLink(into, see) {
+    if (!see) return;
+    var p = el("p", "see", "See how it works: ");
+    var a = el("a", "", see.label); a.href = href(see.href);
+    p.appendChild(a); into.appendChild(p);
+  }
+
+  function start() {
+    var c = T.charter, b = bubble("fm", true);
+    b.className += " charter";
+    b.appendChild(el("h3", "", c.title));
+    c.lines.forEach(function (l) { b.appendChild(el("p", "", l)); });
+    var ol = el("ol");
+    c.tasks.forEach(function (t) { ol.appendChild(el("li", "", t)); });
+    b.appendChild(ol);
+    b.appendChild(el("p", "third", c.third));
+    menu();
+  }
+
+  function choiceGrid(b, items, open) {
+    var grid = el("div", "choices");
+    items.forEach(function (it) {
+      var card = el("div", "choice"), h = el("h4", "", it.title);
+      if (it.badge) h.appendChild(el("span", "st st-dn", it.badge));
+      card.appendChild(h);
+      card.appendChild(el("p", "", it.summary));
+      var a = acts(card);
+      act(a, "See how it works", function () { you("Show me: " + it.title); open(it); });
+      act(a, "Just use it", function () { you("Just use it: " + it.title); useIt(it, open); }, true);
+      grid.appendChild(card);
+    });
+    b.appendChild(grid);
+  }
+
+  function menu() {
+    var b = bubble("fm", true);
+    b.appendChild(el("p", "", T.menu));
+    choiceGrid(b, T.paths, openPath);
+    scroll(b);
+  }
+
+  function useIt(item, open) {
+    var b = bubble("fm", true);
+    b.appendChild(el("p", "", "Send this prompt to First Mate, or to any chat you use."));
+    tryBox(b, "Try this prompt", item.use_prompt);
+    var a = acts(b);
+    act(a, "See how it works", function () { you("Show me: " + item.title); open(item); });
+    act(a, "Other paths", menu, true);
+    scroll(b);
+  }
+
+  function openPath(p) {
+    if (p.tracks) {
+      var b = bubble("fm", true);
+      b.appendChild(el("p", "", p.intro));
+      choiceGrid(b, p.tracks, function (t) { walk(t, 0, p); });
+      scroll(b);
+    } else {
+      say(p.intro);
+      walk(p, 0, null);
+    }
+  }
+
+  // One step of a track: plain answer, tech answer, a prompt to try, and an optional replay.
+  function walk(track, i, parent) {
+    var s = track.steps[i], b = bubble("fm", true);
+    var lbl = el("p", "lbl", track.title + " · step " + (i + 1) + " of " + track.steps.length);
+    if (track.badge) lbl.appendChild(el("span", "st st-dn", track.badge));
+    b.appendChild(lbl);
+    b.appendChild(el("h3", "", s.title));
+    b.appendChild(el("p", "", s.plain));
+    if (s.checklist) checklist(b, s.checklist);
+    var d = el("details", "tech");
+    d.appendChild(el("summary", "", "tech:"));
+    d.appendChild(el("p", "", s.tech));
+    b.appendChild(d);
+    if (s.replay) replay(b, T.replays[s.replay]);
+    tryBox(b, "Try this prompt", s.prompt);
+    seeLink(b, s.see);
+    var a = acts(b);
+    if (i + 1 < track.steps.length) act(a, "Next step", function () { walk(track, i + 1, parent); });
+    else act(a, "Finish", function () { finish(track, parent); });
+    act(a, "Other paths", menu, true);
+    scroll(b);
+  }
+
+  function finish(track, parent) {
+    var b = bubble("fm", true);
+    b.appendChild(el("p", "", T.end.track_done));
+    tryBox(b, "Teach it back", track.teach_back);
+    b.appendChild(el("p", "see", T.end.more));
+    var a = acts(b);
+    if (parent) act(a, "Other tracks", function () { you("Other tracks"); openPath(parent); });
+    act(a, "Other paths", menu, parent ? true : false);
+    scroll(b);
+  }
+
+  function checklist(into, items) {
+    var ul = el("ul", "check");
+    items.forEach(function (it, n) {
+      var li = el("li"), id = "ck" + (++seq);
+      var box = el("input"); box.type = "checkbox"; box.id = id;
+      var lab = el("label"); lab.htmlFor = id;
+      lab.appendChild(el("strong", "", (n + 1) + ". " + it.name + ". "));
+      lab.appendChild(document.createTextNode(it.text));
+      li.appendChild(box); li.appendChild(lab); ul.appendChild(li);
+    });
+    into.appendChild(ul);
+  }
+
+  // Replay windows: click a window to reveal its next scripted step.
+  function replay(into, r) {
+    var box = el("div", "replay");
+    box.appendChild(el("p", "lbl", r.title));
+    box.appendChild(el("p", "note", r.note));
+    var wins = el("div", "wins");
+    r.windows.forEach(function (w) {
+      var win = el("div", "win"), bar = el("div", "bar"), log = el("div", "log");
+      bar.appendChild(el("span", "dot"));
+      bar.appendChild(el("span", "name", w.name));
+      var state = el("span", "state", "replay · 0/" + w.steps.length);
+      bar.appendChild(state);
+      log.appendChild(el("p", "brief", "Brief: " + w.brief));
+      var play = el("button", "play", "Show step 1"); play.type = "button";
+      var n = 0;
+      function next() {
+        if (n >= w.steps.length) return;
+        var s = w.steps[n++];
+        if (s.think) { var t = el("p", "think"); t.appendChild(el("b", "", "thinks ")); t.appendChild(document.createTextNode(s.think)); log.appendChild(t); }
+        if (s.do) { var d = el("p", "does"); d.appendChild(el("b", "", "does ")); d.appendChild(document.createTextNode(s.do)); log.appendChild(d); }
+        if (s.say) { var sb = el("div", "b v"); sb.appendChild(el("span", "who", w.role + " says")); sb.appendChild(el("p", "", s.say)); log.appendChild(sb); }
+        state.textContent = "replay · " + n + "/" + w.steps.length;
+        if (n < w.steps.length) play.textContent = "Show step " + (n + 1);
+        else {
+          log.appendChild(el("p", "end", w.end));
+          win.className += " done"; play.disabled = true; play.textContent = "Done";
+          if (wins.querySelectorAll(".win.done").length === r.windows.length) box.appendChild(el("p", "see", r.after));
+        }
+      }
+      play.addEventListener("click", function (ev) { ev.stopPropagation(); next(); });
+      win.addEventListener("click", next);
+      win.appendChild(bar); win.appendChild(log); win.appendChild(play);
+      wins.appendChild(win);
+    });
+    box.appendChild(wins);
+    into.appendChild(box);
+  }
+
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var text = input.value.trim();
+    if (!text || !T) return;
+    input.value = "";
+    if (T.start.commands.indexOf(text.toLowerCase()) >= 0) { chat.textContent = ""; you(text); start(); }
+    else { you(text); scroll(say(T.start.unknown)); }
+  });
+
+  fetch("tour.json").then(function (r) {
+    if (!r.ok) throw new Error(r.status);
+    return r.json();
+  }).then(function (data) {
+    T = data;
+    say(T.start.greeting);
+  }).catch(function () {
+    var b = say("The tour could not load its script, tour.json. A browser blocks it from a local file.");
+    b.appendChild(el("p", "", "Serve the site folder instead, for example with python3 -m http.server, then open /tour/ on that address."));
+  });
+})();
+</script>
+</body>
+</html>

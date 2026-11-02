@@ -14,6 +14,7 @@ var PAGES = [
 ];
 
 var MORE = [
+  ["tour/index.html", "Guided tour"],
   ["maps/skills.html", "Skill map (interactive)"],
   ["maps/flow.html", "Harness flow map (interactive)"],
   ["brain/index.html", "Second brain"],
@@ -67,7 +68,12 @@ function el(tag, attrs, text) {
 }
 
 function buildShell() {
-  var here = location.pathname.split("/").pop() || "index.html";
+  // A page in a subfolder sets <meta name="site-root" content="../">. Links are
+  // then prefixed with it, and "here" keeps the folder, such as "tour/index.html".
+  var root = meta("site-root");
+  var parts = location.pathname.split("/");
+  var here = parts.pop() || "index.html";
+  for (var d = root.split("../").length - 1; d > 0; d--) here = parts.pop() + "/" + here;
   // The pager walks the list the page is in: main pages, or the More pages.
   var list = PAGES, idx = -1;
   for (var i = 0; i < PAGES.length; i++) if (PAGES[i][0] === here) idx = i;
@@ -80,12 +86,12 @@ function buildShell() {
 
   var app = el("div", { "class": "app" });
   var side = el("aside", { "class": "side", id: "side" });
-  var brand = el("a", { "class": "brand", href: "index.html" }, SITE);
+  var brand = el("a", { "class": "brand", href: root + "index.html" }, SITE);
   side.appendChild(brand);
   side.appendChild(el("div", { "class": "lbl side-sub" }, DRAFT ? "Private draft" : "Notes"));
   var nav = el("nav", { "aria-label": "Pages" });
   function link(into, p, n, inList) {
-    var a = el("a", { "class": "nav", href: p[0] }, p[1]);
+    var a = el("a", { "class": "nav", href: root + p[0] }, p[1]);
     if (inList === list && n === idx) a.setAttribute("aria-current", "page");
     into.appendChild(a);
   }
@@ -139,8 +145,8 @@ function buildShell() {
 
   if (idx >= 0) {
     var pager = el("nav", { "class": "pager", "aria-label": "Previous and next" });
-    pager.appendChild(idx > 0 ? el("a", { href: list[idx - 1][0], rel: "prev" }, "← " + list[idx - 1][1]) : el("span"));
-    pager.appendChild(idx < list.length - 1 ? el("a", { href: list[idx + 1][0], rel: "next" }, list[idx + 1][1] + " →") : el("span"));
+    pager.appendChild(idx > 0 ? el("a", { href: root + list[idx - 1][0], rel: "prev" }, "← " + list[idx - 1][1]) : el("span"));
+    pager.appendChild(idx < list.length - 1 ? el("a", { href: root + list[idx + 1][0], rel: "next" }, list[idx + 1][1] + " →") : el("span"));
     main.appendChild(pager);
   }
 }
