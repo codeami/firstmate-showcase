@@ -6,7 +6,7 @@ This repo is a small static site. The home page, `index.html`, is a plain chat w
 
 Field Notes, `blog/`, holds the published posts, harness and alignment first. The posts, `blog/index.html` and `arena.html` (the harness arena, lifted from one post) are built from the owner's private drafts by a script kept outside this repo, because its edit list quotes the private strings it removes; edit the drafts and rebuild rather than editing these pages by hand. `safety.html` (Safety by design) and `about.html` are hand-written. All of these use the kit through `article.css` and `article.js`.
 
-Six main pages sit behind it: The story (`story.html`, a short mock chat with the orchestrator), How it works, Core logic, Skills, Harness flow, and What works today. That last page says plainly what works and what is only designed. Every other page, such as "Agents as vendors", sits under "More" in the menu.
+Six main pages sit behind it: The story (`story.html`, "How it works, from the very beginning": a short chat with EA-bot for someone new to AI, in the kit's chat style), How it works, Core logic, Skills, Harness flow, and What works today. That last page says plainly what works and what is only designed. Every other page, such as "Agents as vendors", sits under "More" in the menu.
 
 Read it at https://codeami.github.io/firstmate-showcase/
 
