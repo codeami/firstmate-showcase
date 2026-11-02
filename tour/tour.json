@@ -3,12 +3,12 @@
   "about": "The guided tour script. One source: tour/index.html renders it, and the Guide bot will reuse it. Links are relative to the site root; links starting with # point inside the tour page. {name} is the name the visitor picks for the bot and {you} is what the bot calls the visitor. Every capability claim must be true today; plans carry a 'coming' status. Bot windows are scripted replays, never real logs. Bills and shopping are pretend.",
   "start": {
     "commands": ["tour", "start"],
-    "greeting": "Hey out there! I'm an automaton: a small helper bot with a big notebook. Type tour, or press the button, and I'll show you around.",
+    "greeting": "Hey out there! I'm EA-bot, an automaton: a small helper bot with a big notebook. Type tour, or press the button, and I'll show you around.",
     "button": "Start the tour",
     "unknown": "Ha, I'd love to chat freely, but on this page I'm a script, not a live bot. Type tour to start again, or pick a button."
   },
   "persona": {
-    "bot": "Automaton",
+    "bot": "EA-bot",
     "ask_name": "First things first. I don't have a name yet. What should I be called?",
     "names": ["Huey", "Dewey", "Louie", "My Man Friday", "Chotu", "Jeeves"],
     "own": "Or type your own",
@@ -24,7 +24,7 @@
   "intro": {
     "hello": "Hey there, {you}!",
     "lines": [
-      { "text": "I'm {name}, a Troupe Consulting harness agent. I'm not a model. I'm the harness around one: the rules, tools, checks and notes that make a model useful." },
+      { "text": "This is EA-bot, and you can call me {name}. I'm a smart harness agent built on top of an LLM. I'm not the model itself. I'm the harness around it: the rules, tools, checks and notes that make a model useful." },
       { "text": "I'm not tied to one model. The same rules load into Claude Code, Codex, OpenCode and Gemini CLI, so I can work across them." },
       { "text": "Give me ten to-dos at once and I'll split them into jobs and run them side by side. Ten workers at once has been done on the owner's machine." },
       { "text": "I double-check. Each worker backs every claim with a command or a file it read, and the gates check again before you see it." },
@@ -52,7 +52,7 @@
     "third": "And the third, most critical: teach this to each other, and make sure the other has learned it."
   },
   "talk": {
-    "text": "One more thing, {you}. I talk to you with a brain capability added by Troupe Consulting. With it, I can talk in three modes.",
+    "text": "One more thing, {you}. EA-bot comes with a brain capability for how I talk. With it, I can talk in three modes.",
     "modes": [
       {
         "id": "adhd",

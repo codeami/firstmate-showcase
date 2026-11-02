@@ -1,7 +1,7 @@
 ---
 tags: [talk-modes]
 links: [caveman-mode, ste100-mode, progressive-disclosure]
-source: Troupe Consulting talk modes, written for this site
+source: EA-bot talk modes, written for this site
 ---
 
 # ADHD mode

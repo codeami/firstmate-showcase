@@ -1,7 +1,7 @@
 ---
 tags: [talk-modes]
 links: [adhd-mode, caveman-mode, progressive-disclosure]
-source: Troupe Consulting talk modes, after ASD-STE100 Simplified Technical English
+source: EA-bot talk modes, after ASD-STE100 Simplified Technical English
 ---
 
 # STE100 mode
