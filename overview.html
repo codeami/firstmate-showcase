@@ -3,119 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light dark">
-<title>How It Works</title>
-<meta name="description" content="One person, one supervisor agent, many worker agents, one rules file. How the parts fit.">
-<meta name="date" content="2026-10-30">
-<meta name="last-updated" content="2026-11-01">
-<link rel="stylesheet" href="style.css">
-<script src="nav.js"></script>
+<title>This page has moved</title>
+<meta http-equiv="refresh" content="0; url=https://codeami.github.io/ai-life-os/index.html#pages">
+<link rel="canonical" href="https://codeami.github.io/ai-life-os/index.html">
+<meta name="robots" content="noindex">
+<script>location.replace("https://codeami.github.io/ai-life-os/index.html" + location.search + (location.hash || "#pages"));</script>
 </head>
 <body>
-<main>
-<p class="kicker">How it works</p>
-<h1>One person, many coding agents, one set of rules</h1>
-<p class="lede">The owner talks to one supervisor agent. The supervisor runs worker agents. Every agent reads the same short rules file. The owner approves every change that matters.</p>
-
-<h2 id="running">It runs today</h2>
-<p>This is a working system, not a design. It runs daily on the owner's machine.</p>
-<p>One of its workers built this site. About 110 scout reports are on disk. On one day, four workers ran in parallel. Three each delivered a reviewed pull request on a public repo: <a href="https://github.com/codeami/firstmate-showcase/pull/1">this site</a>, <a href="https://github.com/codeami/reels4mphotos/pull/23">reels4mphotos</a> and <a href="https://github.com/codeami/swarm-referee/pull/9">swarm-referee</a>. The fourth delivered a private package.</p>
-<p>The supervisor and most worker mechanics are upstream <a href="https://github.com/kunchenguid/firstmate">Firstmate</a>, MIT licence, by Kun Chen and contributors. The owner built the rules file, the hooks, the work index and the review flow.</p>
-
-<h2 id="supervisor">1. The supervisor</h2>
-<p>The owner asks for work in plain words. The supervisor writes a brief for each task. Then it starts one worker for that task.</p>
-<p>Each worker writes short status lines to its own file. A small shell script watches those files. It uses no model tokens. It wakes the supervisor only when a worker needs something.</p>
-<figure>
-<svg viewBox="0 0 380 330" role="img" aria-labelledby="t2 d2">
-  <title id="t2">One supervisor, many workers</title>
-  <desc id="d2">The owner talks to the supervisor. The supervisor starts three workers. Each worker writes one status file. A watcher reads the status files and wakes the supervisor.</desc>
-  <defs>
-    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" style="fill: var(--soft)"/>
-    </marker>
-  </defs>
-  <rect x="120" y="8" width="140" height="34" rx="17" class="card"/>
-  <text x="190" y="30" text-anchor="middle" font-size="14" font-weight="700">Owner</text>
-  <path d="M190 42 V 64" class="wire" marker-end="url(#a2)"/>
-  <rect x="90" y="66" width="200" height="44" rx="8" class="card" style="stroke: var(--l1); stroke-width: 2"/>
-  <text x="190" y="93" text-anchor="middle" font-size="14" font-weight="700">Supervisor</text>
-  <path d="M150 110 L 70 150" class="wire" marker-end="url(#a2)"/>
-  <path d="M190 110 V 150" class="wire" marker-end="url(#a2)"/>
-  <path d="M230 110 L 310 150" class="wire" marker-end="url(#a2)"/>
-  <g font-size="13">
-    <rect x="16" y="152" width="108" height="56" rx="8" class="card" style="stroke: var(--l2); stroke-width: 2"/>
-    <text x="70" y="176" text-anchor="middle" font-weight="700">Worker A</text>
-    <text x="70" y="196" text-anchor="middle" font-size="11" class="soft">own worktree</text>
-    <rect x="136" y="152" width="108" height="56" rx="8" class="card" style="stroke: var(--l2); stroke-width: 2"/>
-    <text x="190" y="176" text-anchor="middle" font-weight="700">Worker B</text>
-    <text x="190" y="196" text-anchor="middle" font-size="11" class="soft">own worktree</text>
-    <rect x="256" y="152" width="108" height="56" rx="8" class="card" style="stroke: var(--l2); stroke-width: 2"/>
-    <text x="310" y="176" text-anchor="middle" font-weight="700">Worker C</text>
-    <text x="310" y="196" text-anchor="middle" font-size="11" class="soft">own worktree</text>
-  </g>
-  <path d="M70 208 V 228" class="wire" marker-end="url(#a2)"/>
-  <path d="M190 208 V 228" class="wire" marker-end="url(#a2)"/>
-  <path d="M310 208 V 228" class="wire" marker-end="url(#a2)"/>
-  <g font-size="11">
-    <rect x="26" y="230" width="88" height="26" rx="5" class="card"/><text x="70" y="247" text-anchor="middle">a.status</text>
-    <rect x="146" y="230" width="88" height="26" rx="5" class="card"/><text x="190" y="247" text-anchor="middle">b.status</text>
-    <rect x="266" y="230" width="88" height="26" rx="5" class="card"/><text x="310" y="247" text-anchor="middle">c.status</text>
-  </g>
-  <path d="M70 256 V 290 H 140" class="wire"/>
-  <path d="M310 256 V 290 H 240" class="wire"/>
-  <path d="M190 256 V 276" class="wire" marker-end="url(#a2)"/>
-  <rect x="140" y="278" width="100" height="26" rx="5" class="card"/>
-  <text x="190" y="295" text-anchor="middle" font-size="12" font-weight="700">watcher</text>
-  <path d="M240 291 H 372 V 88 H 292" class="wire" marker-end="url(#a2)"/>
-  <text x="300" y="322" font-size="11" class="soft" text-anchor="middle">wakes only when needed</text>
-</svg>
-<figcaption>One supervisor, many workers, one status file each. Waiting costs no tokens.</figcaption>
-</figure>
-<p>Each worker is a normal agent session in a visible terminal window. It is not a tool's built-in sub-agent. A built-in sub-agent is hard to see and hard to steer, and its work can die with its parent. Upstream records one such loss.</p>
-
-<h2 id="workers">2. The workers</h2>
-<p>A worker is one agent on one task. There are two kinds.</p>
-<div class="cards">
-  <div class="box"><h3>Scout</h3><p>Finds facts. It writes a report. Nothing is pushed.</p></div>
-  <div class="box"><h3>Ship</h3><p>Changes code. It opens a pull request. The owner says when it merges.</p></div>
-</div>
-<p>Each worker gets its own git worktree. That is a separate, disposable copy of the code. A worker cannot break the owner's main copy.</p>
-
-<h2 id="task">3. The life of one task</h2>
-<ol>
-  <li><strong>Brief.</strong> The intent, the rules and where to write.</li>
-  <li><strong>Worktree.</strong> A clean copy of the code.</li>
-  <li><strong>Report or pull request.</strong> With evidence: the commands run and the files read.</li>
-  <li><strong>Completion gate.</strong> A worker may not close a task while a question for the owner is open.</li>
-</ol>
-<p>This site went through these steps. Its brief said: write only in the site folder, remove personal details, credit upstream, and never push.</p>
-<p><span class="st st-dn">designed, not proven</span> The full ship path with the pre-push gate was not run for this site.</p>
-
-<h2 id="map">4. One rules file for every tool</h2>
-<p>Every agent tool reads the same short rules file first. The owner calls it the map.</p>
-<p>The map is one Markdown file. Links put it where Claude Code, Codex, OpenCode, Gemini CLI and backpass each look for it. Change it once, and all five see the change in their next session.</p>
-<p>The map holds house rules, a "who does what" list, and a routing table. The routing table says: for this kind of task, go to this folder and read these files first.</p>
-
-<h2 id="layers">5. Layers and rooms</h2>
-<p>Context comes in layers, from broad to narrow: the map, each tool's own settings, a repo's rules, a room, and the work in hand. An agent loads only what its task needs.</p>
-<p>A room is a folder for one kind of work, such as writing or software. Its <code>CONTEXT.md</code> names the input, the task, the output and a check.</p>
-<p>Nothing outside writes into the map or the rooms. A tool may propose an edit. The owner applies it.</p>
-<p>Shell tests check the structure, with no model calls: 58 pass, 0 fail (2026-10-30). A probe would ask each agent for a word from the map, to prove it loaded. It costs tokens and was not run. <span class="st st-dn">designed, not proven</span></p>
-
-<h2 id="added">6. What the owner added</h2>
-<p>The owner runs a private fork of Firstmate with two additions:</p>
-<ul>
-  <li>Scouts run a plain-English checker on their report before they say "done". It flags long sentences and vague words.</li>
-  <li>Notes from the agent's own memory reach the curated facts file only after review.</li>
-</ul>
-<p>The first one has a cost. It makes Firstmate depend on the owner's context system, so one test now fails. The owner keeps that trade-off. <a href="testing.html">Read the case</a>.</p>
-
-<h2 id="planned">7. Coming next</h2>
-<p><span class="st st-dn">planned</span> General-purpose workers: comms, mail and calendar, home, content and markets. None is built. Nothing here is proven. Each would follow the same rules: one task per worker, written instructions, checks, and nothing acts without the owner's word.</p>
-
-<h2 id="more">Go deeper</h2>
-<p>The full detail pages: <a href="s02.html">Supervisor</a> · <a href="s03.html">Crews</a> · <a href="s04.html">Context system</a> · <a href="vendors.html">Agents as vendors</a>. Every other page is under "More" in the menu.</p>
-<p>Next: <a href="core.html">Core logic</a>, <a href="skills.html">Skills</a>, then <a href="harness.html">Harness flow</a> and <a href="s09.html">What works today</a>.</p>
-</main>
+<p>This page has moved to <a href="https://codeami.github.io/ai-life-os/index.html#pages">https://codeami.github.io/ai-life-os/index.html#pages</a>.</p>
 </body>
 </html>
