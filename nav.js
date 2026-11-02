@@ -1,10 +1,13 @@
 /* Shared shell for every page: sidebar nav, header with day/night toggle,
    draft banner, byline and previous/next links. No build step, no network.
    To add or rename a page, edit one line in PAGES or MORE. Order here is reading order.
-   PAGES are the six main pages. MORE holds every other page, behind a "More" fold. */
+   PAGES are the main pages. MORE holds every other page, behind a "More" fold. */
 var DRAFT = false; // false removes the draft banner on every page
 
 var PAGES = [
+  ["blog/index.html", "Field Notes"],
+  ["arena.html",     "Harness arena"],
+  ["safety.html",    "Safety by design"],
   ["story.html",     "The story"],
   ["overview.html",  "How it works"],
   ["core.html",      "Core logic"],
@@ -30,30 +33,30 @@ var MORE = [
   ["testing.html",   "Testing in public"],
   ["vendors.html",   "Agents as vendors"],
   ["s10.html",       "Influences"],
-  ["changelog.html", "Changelog"]
+  ["changelog.html", "Changelog"],
+  ["about.html",     "About"]
 ];
 
-var SITE = "Six-Lane Agent Setup";
+var SITE = "The Chart Room";
 
-/* Theme: follow the system unless the reader picked one. The choice is kept in
-   localStorage. This runs in the head, before the body is drawn, so there is
-   no flash. */
-function validTheme(t) { return t === "light" || t === "dark" ? t : null; }
-function readTheme() {
-  try { return validTheme(localStorage.getItem("theme")); } catch (e) { return null; }
-}
-function saveTheme(t) {
-  try { localStorage.setItem("theme", t); } catch (e) { /* storage blocked: the choice lasts for this page only */ }
-}
-var chosenTheme = readTheme();
-function currentTheme() {
-  var set = document.documentElement.getAttribute("data-theme");
-  if (set) return set;
-  return window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-}
-if (chosenTheme) {
-  document.documentElement.setAttribute("data-theme", chosenTheme);
-}
+/* Skin: the HUD look (warm accent) or Matrix green, as the reader last picked
+   ("skin" in localStorage). This runs in the head, before the body is drawn, so
+   there is no flash. hud.css colours the page; hud.js draws the background graph
+   and turns the header's theme button into the skin toggle. Both sit next to
+   this file, as article.js loads them for the kit pages. */
+(function () {
+  var root = document.documentElement;
+  var base = document.currentScript ? document.currentScript.src.replace(/[^\/]*$/, "") : "";
+  var s = null;
+  try { s = localStorage.getItem("skin"); } catch (e) { /* storage blocked: use the default */ }
+  root.setAttribute("data-skin", s === "matrix" ? "matrix" : "hud");
+  var css = document.createElement("link");
+  css.rel = "stylesheet"; css.href = base + "hud.css";
+  document.head.appendChild(css);
+  var js = document.createElement("script");
+  js.src = base + "hud.js";
+  document.head.appendChild(js);
+})();
 
 function meta(name) {
   var m = document.querySelector('meta[name="' + name + '"]');
@@ -111,20 +114,7 @@ function buildShell() {
     menu.setAttribute("aria-expanded", open ? "true" : "false");
   });
   var where = el("span", { "class": "lbl where" }, idx >= 0 ? list[idx][1] : "");
-  var toggle = el("button", { "class": "theme", type: "button" });
-  function label() {
-    var dark = currentTheme() === "dark";
-    toggle.textContent = dark ? "Day" : "Night";
-    toggle.setAttribute("aria-label", dark ? "Switch to day mode" : "Switch to night mode");
-  }
-  toggle.addEventListener("click", function () {
-    var next = currentTheme() === "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", next);
-    chosenTheme = next;
-    saveTheme(next);
-    label();
-  });
-  label();
+  var toggle = el("button", { "class": "theme", type: "button" }, "Matrix"); // hud.js runs it
   top.appendChild(menu); top.appendChild(where); top.appendChild(toggle);
   col.appendChild(top);
 

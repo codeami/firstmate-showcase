@@ -52,16 +52,16 @@ KEYS = {
 key = "".join(f'<span class="ky {KEYS[k][0]}" title="{E(KEYS[k][2])}"><i></i>{KEYS[k][1]}</span>' for k in meta.get("key", []))
 legend = f'<div class="sm-key" aria-label="Key">{key}</div>' if key else ""
 
-# The site's five main pages. A map marks the page it belongs to as current.
+# Field Notes and the site's five main pages. A map marks the page it belongs to as current.
 here = {"skills.html": "../skills.html", "flow.html": "../harness.html"}.get(out.name, "")
-LINKS = [("../index.html", "Story"), ("../overview.html", "How it works"), ("../skills.html", "Skills"),
+LINKS = [("../blog/index.html", "Field Notes"), ("../index.html", "Story"), ("../overview.html", "How it works"), ("../skills.html", "Skills"),
          ("../harness.html", "Harness flow"), ("../s09.html", "What works today")]
 CUR = ' aria-current="page"'
 links = "".join(f'<a class="lk" href="{h}"{CUR if h == here else ""}><span class="tl">{t}</span></a>' for h, t in LINKS)
 NAV = ('<header class="top wide"><div class="in">'
        '<a class="logo" href="../index.html"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="20" fill="#191816" stroke="#36332f" stroke-width="2"/>'
        '<rect x="16" y="18" width="16" height="60" rx="4" fill="#fff" fill-opacity=".1"/><rect x="40" y="18" width="16" height="60" rx="4" fill="#fff" fill-opacity=".1"/><rect x="64" y="18" width="16" height="60" rx="4" fill="#fff" fill-opacity=".1"/>'
-       '<rect x="19" y="22" width="10" height="9" rx="2" fill="#e07b6a"/><rect x="43" y="22" width="10" height="9" rx="2" fill="#8cc594"/><rect x="67" y="22" width="10" height="9" rx="2" fill="#b4a6e6"/></svg><span class="lt">Six-Lane Agent Setup</span></a>'
+       '<rect x="19" y="22" width="10" height="9" rx="2" fill="#e07b6a"/><rect x="43" y="22" width="10" height="9" rx="2" fill="#8cc594"/><rect x="67" y="22" width="10" height="9" rx="2" fill="#b4a6e6"/></svg><span class="lt">The Chart Room</span></a>'
        '<span class="sp"></span>' + links +
        '<button class="btn" id="sbtt" type="button" aria-label="Toggle light or dark theme"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span class="nl">Theme</span></button>'
        '</div></header>')

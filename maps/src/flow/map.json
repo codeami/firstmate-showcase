@@ -149,7 +149,7 @@
    "next": ["memory-learnings"], "sources": [{"label": "SKILL.md (upstream)", "url": "https://github.com/kunchenguid/firstmate/blob/main/.agents/skills/ship-landing/SKILL.md"}, {"label": "Crews page", "url": "../s03.html"}]},
   "memory-learnings": {"name": "memory-learnings", "trigger": "notes, proposals, review",
    "when": ["When a task or session closes → [[memory-learnings]]"],
-   "whatItIs": "A session note is written. A tool proposes edits to the instruction files. **The owner reviews each one.** Facts enter long-term memory only after review. The next ask starts from those files.\n\n**Status: installed. The nightly proposal job was not yet seen to succeed** (as of 2026-10-31).",
+   "whatItIs": "A session note is written. A tool proposes edits to the instruction files. **The owner reviews each one.** Facts enter long-term memory only after review. The next ask starts from those files.\n\n**Status: runs daily; proposes rule edits; the owner approves** (as of 2026-11-02).",
    "next": ["owner-ask"], "sources": [{"label": "Memory and index", "url": "../s06.html"}, {"label": "What works today", "url": "../s09.html"}]}
  }
 }

@@ -4,13 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<title>Chat with EA-bot</title>
-<meta name="description" content="A plain chat with EA-bot. Click one of three options to go one level deeper, and save any option to a review-later list.">
-<script>
-/* The reader's day/night choice is shared with the other pages (nav.js keeps it
-   as "theme"). The kit reads it as data-mode. */
-try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.setAttribute("data-mode", t); } catch (e) { /* storage blocked: follow the system */ }
-</script>
+<title>The Chart Room: chat with EA-bot</title>
+<meta name="description" content="The Chart Room: how one captain runs a crew of AI agents, safely. A plain chat with EA-bot, field notes on harness engineering and alignment, and the day's numbers.">
+<script src="article.js"></script>
 <link rel="icon" href="kit/bosun.svg" type="image/svg+xml">
 <link rel="stylesheet" href="kit/tokens.css">
 <link rel="stylesheet" href="kit/kit.css">
@@ -104,6 +100,17 @@ html { scroll-behavior: smooth; }
 .foot p { margin: 0 0 6px; }
 .warnbox { padding: var(--space-3) var(--space-4); background: var(--surface); border: 1px solid var(--line); box-shadow: inset 4px 0 0 var(--warn); border-radius: var(--radius); }
 .warnbox p { margin: 0 0 6px; }
+.k-home { display: flex; align-items: center; gap: var(--space-3); min-width: 0; color: var(--ink); text-decoration: none; }
+.k-nav nav a { white-space: nowrap; }
+
+/* Proof strip: the day's true numbers under the chat. Each card links to the page that explains it. */
+.proof { max-width: 1120px; margin: 0 auto; padding: var(--space-5) var(--space-4); border-top: 1px solid var(--line); }
+.proof h2 { margin: 0 0 4px; font-size: 22px; }
+.proof .by { margin: 0 0 var(--space-4); color: var(--mute); }
+.proof .k-cards { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.proof a.k-card { color: var(--ink); text-decoration: none; }
+.proof a.k-card:hover { border-color: var(--accent); }
+.proof .k-l { margin-bottom: 0; }
 @media (max-width: 600px) {
   .k-logo small { display: none; }
   .k-nav { gap: 10px; }
@@ -130,12 +137,12 @@ html { scroll-behavior: smooth; }
 </svg>
 
 <header class="k-nav">
-  <svg class="k-mark" role="img" aria-label="Bosun, the EA-bot mascot"><use href="#bosun"/></svg>
-  <div class="k-logo">EA-bot<small>A scripted chat. Every fact is true today.</small></div>
+  <a class="k-home" href="index.html"><svg class="k-mark" role="img" aria-label="Bosun, the EA-bot mascot"><use href="#bosun"/></svg>
+  <span class="k-logo">The Chart Room<small>How one captain runs a crew of AI agents, safely.</small></span></a>
   <nav aria-label="Site">
-    <a href="story.html">Story</a>
-    <a href="tour/index.html">Tour</a>
-    <a href="overview.html">All pages</a>
+    <a href="blog/index.html">Field Notes</a>
+    <a href="arena.html">Arena</a>
+    <a href="safety.html">Safety</a>
     <button class="theme" id="theme" type="button"></button>
   </nav>
 </header>
@@ -168,8 +175,20 @@ html { scroll-behavior: smooth; }
   </aside>
 </div>
 
+<section class="proof" aria-labelledby="proof-h">
+  <h2 id="proof-h">2 November, in numbers</h2>
+  <p class="by">by Ashish Raina – program manager turned AI-crew operator. Each number links to the page that explains it.</p>
+  <div class="k-cards">
+    <a class="k-card" href="blog/rules-from-chat-history.html"><div class="k-n">46</div><p class="k-l">chat corrections reviewed</p></a>
+    <a class="k-card" href="blog/rules-from-chat-history.html#s6"><div class="k-n">4</div><p class="k-l">new rules, approved by me</p></a>
+    <a class="k-card" href="blog/guides-and-sensors.html#s10"><div class="k-n">3</div><p class="k-l">automatic checks added: secret scan at commit, plain-language check on drafts, link check before replies</p></a>
+    <a class="k-card" href="safety.html#false-passes"><div class="k-n">9</div><p class="k-l">false passes logged: work that passed the checks, then I rejected</p></a>
+    <a class="k-card" href="changelog.html#d2026-11-02"><div class="k-n">6</div><p class="k-l">pull requests merged that day</p></a>
+  </div>
+</section>
+
 <footer class="foot">
-  <p>Prefer to read? <a href="story.html">The story</a> · <a href="tour/index.html">Guided tour</a> · <a href="overview.html">How it works</a> · <a href="s09.html">What works today</a></p>
+  <p>Prefer to read? <a href="blog/index.html">Field Notes</a> · <a href="story.html">The story</a> · <a href="tour/index.html">Guided tour</a> · <a href="overview.html">How it works</a> · <a href="s09.html">What works today</a> · <a href="about.html">About</a> · <a href="overview.html">All pages</a></p>
   <p>The supervisor and most crew mechanics are upstream <a href="https://github.com/kunchenguid/firstmate">Firstmate</a>, MIT licence, by Kun Chen and contributors.</p>
 </footer>
 
@@ -180,26 +199,6 @@ html { scroll-behavior: smooth; }
   var log = document.getElementById("log");
   var C, I, byId = {}, S, busy = false;
   var calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* Day/night: the same "theme" choice nav.js keeps for the other pages. */
-  var themeBtn = document.getElementById("theme");
-  function mode() {
-    var m = document.documentElement.getAttribute("data-mode");
-    if (m) return m;
-    return window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  }
-  function themeLabel() {
-    var dark = mode() === "dark";
-    themeBtn.textContent = dark ? "Day" : "Night";
-    themeBtn.setAttribute("aria-label", dark ? "Switch to day mode" : "Switch to night mode");
-  }
-  themeBtn.addEventListener("click", function () {
-    var next = mode() === "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-mode", next);
-    try { localStorage.setItem("theme", next); } catch (e) { /* storage blocked: lasts for this page only */ }
-    themeLabel();
-  });
-  themeLabel();
 
   /* Progress and the checklist live in localStorage. Blocked storage only means
      they last for this visit. */

@@ -117,8 +117,7 @@
       },
       {
         "id": "learn", "folder": "memory", "title": "Rules that improve", "chip": "Do you get better over time?",
-        "fact": "A tool called backpass reads my old sessions and proposes edits to my own rules. It never writes them. You approve each one.",
-        "status": "nightly job installed, not yet seen to run",
+        "fact": "A tool called backpass reads my old sessions every day and proposes edits to my own rules. It never writes them. You approve each one.",
         "see": { "label": "Core logic: self-improvement", "href": "core.html#part-improve" },
         "next": ["teachback", "skills", "honest"]
       },
@@ -372,8 +371,7 @@
         {
           "title": "Keep mine up to date too",
           "plain": "I learn as well. At night, a tool reads my old sessions and proposes changes to my own rules. It never writes them. You approve each one.",
-          "tech": "backpass reads tool logs and proposes rule edits backed by quotes from two or more sessions. The nightly job is installed but has not yet been seen to run.",
-          "status": "installed, not yet seen to run",
+          "tech": "backpass reads tool logs and proposes rule edits backed by quotes from two or more sessions. It runs daily; it proposes rule edits; the owner approves.",
           "prompt": "Look back at our chats this week. List each time I corrected you. For each, say whether the fix belongs in your rules, a skill, or nowhere, and write the exact wording. Change nothing until I approve.",
           "see": { "label": "Core logic: self-improvement", "href": "core.html#part-improve" }
         }

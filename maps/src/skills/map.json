@@ -55,7 +55,6 @@
   {"id": "maintain", "name": "Learn", "icon": "anytime",
    "principle": "Keep what was learned. The **next** Intake reads it.",
    "when": ["When the task is closed → you are in Learn"],
-   "gap": "The nightly rule proposals have not been seen to run.",
    "sources": [{"label": "Memory and index", "url": "../s06.html"}]}
  ],
  "categories": [
@@ -309,7 +308,7 @@
    "next": ["rule-proposals"], "sources": [{"label": "Hooks and rules page", "url": "../s05.html"}]},
   "rule-proposals": {"name": "rule-proposals", "trigger": "nightly proposal job",
    "when": ["Each night, over the session notes → [[rule-proposals]]"],
-   "whatItIs": "A tool (backpass) reads the notes and **proposes** edits to the instruction files. It never writes them.\n\n**Status: installed. The nightly job was not yet seen to succeed** (as of 2026-10-31).",
+   "whatItIs": "A tool (backpass) reads the notes and **proposes** edits to the instruction files. It never writes them.\n\n**Status: runs daily; proposes rule edits; the owner approves** (as of 2026-11-02).",
    "next": ["owner-review"], "sources": [{"label": "What works today", "url": "../s09.html"}]},
   "owner-review": {"name": "owner-review", "trigger": "owner applies or rejects",
    "when": ["Each morning, for every proposal → [[owner-review]]"],
