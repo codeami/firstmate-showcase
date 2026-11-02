@@ -10,6 +10,8 @@ The pages are plain HTML, `style.css` and `nav.js`. There is no build step for t
 
 The two interactive maps, `maps/skills.html` and `maps/flow.html`, are built files. Their source is `maps/src/*/map.json` and the shell in `maps/_shared/` comes from [super-board](https://github.com/EricTechPro/super-board) by EricTechPro (MIT; see `maps/_shared/NOTICE`). To rebuild: `python3 -I maps/_shared/build.py maps/src/skills/map.json maps/skills.html` (and the same for `flow`).
 
-The second brain map, `brain/index.html`, reads `brain/notes.js`. Both it and `brain/notes/*.md` are built from the owner's private wiki, but only for the slugs in `brain/allowlist.txt`, and a privacy pass drops any line with a never-send term, a user name, a local path or an email. To rebuild: `python3 -I brain/build.py --src <wiki nodes folder> --never-send <terms file>`.
+The guided tour, `tour/index.html`, draws everything from `tour/tour.json`, the one script for the tour. It fetches that file, so serve the folder to read it locally: `python3 -m http.server`, then open `/tour/`.
+
+The second brain map, `brain/index.html`, reads `brain/notes.js`. Both it and `brain/notes/*.md` are built from the owner's private wiki, but only for the slugs in `brain/allowlist.txt`, plus the notes written for this site in `brain/site-notes/` (the three talk modes). A privacy pass drops any line with a never-send term, a user name, a local path or an email. To rebuild: `python3 -I brain/build.py --src <wiki nodes folder> --never-send <terms file>`.
 
 The supervisor and most crew mechanics are upstream [Firstmate](https://github.com/kunchenguid/firstmate) by Kun Chen and contributors. See `LICENSE` for this repo's licence.

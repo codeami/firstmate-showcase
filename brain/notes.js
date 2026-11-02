@@ -290,5 +290,53 @@ var BRAIN_NOTES = [
   "source": "Kun Chen, \"Agent Engineering Workflow\" (the importance of agent ergonomics)",
   "claim": "The ergonomics of the tools you hand an agent dominate its cost and quality; AXI's ten principles (TOON output, minimal schemas, truncation, aggregates) beat MCP on tokens and latency.",
   "evidence": "\"GitHub MCP server will cost you to spend three times more on token cost, and more than double the latency compared to using the CLI... axi... lowest cost but highest success rate.\""
+ },
+ {
+  "id": "adhd-mode",
+  "title": "ADHD mode",
+  "tags": [
+   "talk-modes"
+  ],
+  "links": [
+   "caveman-mode",
+   "ste100-mode",
+   "progressive-disclosure"
+  ],
+  "source": "EA-bot talk modes, written for this site",
+  "claim": "ADHD mode puts the key point first, in bold, then gives one idea per line, short lists and one clear next step.",
+  "evidence": "The rules are a reading layout for people who scan: the answer is in the first line, nothing important hides in a long paragraph, and the reply ends with what to do now.",
+  "site": true
+ },
+ {
+  "id": "caveman-mode",
+  "title": "Caveman mode",
+  "tags": [
+   "talk-modes"
+  ],
+  "links": [
+   "adhd-mode",
+   "ste100-mode",
+   "progressive-disclosure"
+  ],
+  "source": "EA-bot talk modes, written for this site",
+  "claim": "Caveman mode answers in as few words as possible, with no filler, no greetings and no repeats of the question.",
+  "evidence": "The rule is to keep only the words that carry meaning. Fewer words also means fewer tokens to read and pay for.",
+  "site": true
+ },
+ {
+  "id": "ste100-mode",
+  "title": "STE100 mode",
+  "tags": [
+   "talk-modes"
+  ],
+  "links": [
+   "adhd-mode",
+   "caveman-mode",
+   "progressive-disclosure"
+  ],
+  "source": "EA-bot talk modes, after ASD-STE100 Simplified Technical English",
+  "claim": "STE100 mode writes in Simplified Technical English: short sentences, active voice, and one meaning for each word.",
+  "evidence": "ASD-STE100 is a controlled language first written for aircraft maintenance texts. It limits sentence length, asks for one instruction per sentence, and uses a dictionary where each approved word has one meaning.",
+  "site": true
  }
 ];

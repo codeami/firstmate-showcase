@@ -519,11 +519,18 @@ function centre(n) {
   view.y = (svg.clientWidth <= 760 ? svg.clientHeight * 0.22 : svg.clientHeight / 2) - wy(n) * view.k;
   apply();
 }
+/* The address follows the open node (#<node-id>), so a link can be shared and Back steps through nodes. */
+function mark(id) {
+  var want = id ? "#" + encodeURIComponent(id) : "";
+  if (location.hash === want) return;
+  try { history.pushState(null, "", want || location.pathname + location.search); } catch (e) { /* sandbox may refuse */ }
+}
 function open(n) {
+  mark(n.id);
   sel = n; relight();
   ov.textContent = "";
   var x = h("button", "btn close", "Close", ov); x.type = "button"; x.onclick = close;
-  h("div", "kick", GROUPS[n.group].label, ov);
+  h("div", "kick", n.note && n.note.site ? "Site note (written for this page)" : GROUPS[n.group].label, ov);
   var t = h("h2", null, n.label, ov); t.id = "ovTitle";
   chips(n, ov);
   if (n.note) {
@@ -573,6 +580,7 @@ function open(n) {
 }
 function close() {
   var was = sel;
+  mark("");
   sel = null; ov.hidden = true; relight();
   if (was) was.el.focus({ preventScroll: true });
 }
@@ -636,13 +644,20 @@ var lg = document.getElementById("legend"), lb = document.getElementById("legend
     var r = h("div", "row", null, lg), d = h("span", "pip", null, r); d.style.background = SCOL[i];
     r.appendChild(document.createTextNode(s));
   });
-  h("p", null, "Wiki notes are copies of approved notes only. Lines naming private terms, local paths, emails or user names are dropped at build time.", lg);
+  h("p", null, "Wiki notes are copies of approved notes only, plus three talk-mode notes written for this site. Lines naming private terms, local paths, emails or user names are dropped at build time.", lg);
 })();
 function showLegend(on) { lg.hidden = !on; lb.setAttribute("aria-expanded", on ? "true" : "false"); lb.classList.toggle("on", on); }
 lb.onclick = function () { showLegend(lg.hidden); };
 showLegend(window.innerWidth >= 1400);
 
 fit();
+/* A link such as brain/index.html#ste100-mode opens that node, on load and on Back or Forward. */
+function fromHash() {
+  var n = byId[decodeURIComponent(location.hash.slice(1))];
+  if (n) { open(n); centre(n); } else if (sel) close();
+}
+window.addEventListener("popstate", fromHash);
+fromHash();
 </script>
 </body>
 </html>

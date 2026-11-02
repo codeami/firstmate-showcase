@@ -88,8 +88,11 @@ def main():
     allow = [s.strip() for s in Path(a.allowlist).read_text(encoding="utf-8").splitlines()
              if s.strip() and not s.lstrip().startswith("#")]
     terms, names = read_terms(a.never_send), user_names()
-    present = [s for s in allow if (src / f"{s}.md").is_file()]
-    missing = [s for s in allow if s not in present]
+    paths = {s: src / f"{s}.md" for s in allow if (src / f"{s}.md").is_file()}
+    missing = [s for s in allow if s not in paths]
+    # Notes written for this site (brain/site-notes/) are always copied, through the same privacy pass.
+    paths.update({p.stem: p for p in sorted((HERE / "site-notes").glob("*.md"))})
+    present = list(paths)
     keep = set(present)
 
     NOTES.mkdir(exist_ok=True)
@@ -99,7 +102,7 @@ def main():
     dropped, data = Counter(), []
     for slug in present:
         out = []
-        for ln in (src / f"{slug}.md").read_text(encoding="utf-8").splitlines():
+        for ln in paths[slug].read_text(encoding="utf-8").splitlines():
             why = reason(ln, terms, names)
             if why:
                 dropped[why] += 1
@@ -113,7 +116,8 @@ def main():
         fm, title, secs = parse(text)
         data.append({"id": slug, "title": title or slug, "tags": listval(fm.get("tags", "")),
                      "links": listval(fm.get("links", "")), "source": fm.get("source", ""),
-                     "claim": secs.get("Claim", ""), "evidence": secs.get("Evidence", "")})
+                     "claim": secs.get("Claim", ""), "evidence": secs.get("Evidence", ""),
+                     **({"site": True} if paths[slug].parent.name == "site-notes" else {})})
 
     js = json.dumps(data, ensure_ascii=False, indent=1).replace("</", "<\\/")
     (HERE / "notes.js").write_text("/* Built by brain/build.py from brain/allowlist.txt. Do not edit by hand. */\n"
@@ -122,7 +126,7 @@ def main():
     # Re-scan what was written: the pass must leave nothing behind.
     left = sum(1 for f in [*NOTES.glob("*.md"), HERE / "notes.js"]
                for ln in f.read_text(encoding="utf-8").splitlines() if reason(ln, terms, names))
-    print(f"allowlisted: {len(allow)}  copied: {len(present)}  missing: {len(missing)}")
+    print(f"allowlisted: {len(allow)}  copied: {len(present)} (site notes included)  missing: {len(missing)}")
     for s in missing:
         print(f"  missing: {s}")
     print(f"lines dropped: {sum(dropped.values())}" + "".join(f"  {k}: {v}" for k, v in sorted(dropped.items())))

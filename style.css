@@ -111,6 +111,16 @@ th { font: .68rem var(--mono); text-transform: uppercase; letter-spacing: .08em;
 .log li { padding: 12px 0; border-bottom: 1px solid var(--line); max-width: none; }
 footer { margin-top: 2rem; color: var(--soft); font-size: .85rem; }
 
+/* Chat bubbles, shared by the story and the guided tour */
+.b { max-width: 88%; padding: .6rem .85rem; border-radius: 16px; line-height: 1.45; border: 1px solid var(--line); }
+.b p { margin: 0; max-width: none; } .b p + p { margin-top: .4rem; }
+.b.v { align-self: flex-start; background: var(--sunk); border-bottom-left-radius: 4px; }
+.b.fm { align-self: flex-end; background: var(--card); border-color: var(--accent); border-bottom-right-radius: 4px; }
+.who { display: block; font: .66rem var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--soft); margin-bottom: .2rem; }
+.b.big { align-self: stretch; max-width: none; border-width: 2px; padding: 1rem 1.1rem; background: color-mix(in srgb, var(--accent) 8%, var(--card)); }
+.b.big h3 { margin: 0 0 .5rem; font: 700 1.25rem var(--serif); }
+.b.big ol { margin: .4rem 0; padding-left: 1.2rem; } .b.big li { margin: .35rem 0; max-width: none; }
+
 /* Collapsible tree on the Core logic page */
 .tree { border-top: 1px solid var(--line); margin: 1rem 0; }
 .tree details { border-bottom: 1px solid var(--line); padding: 0 0 0 4px; }
