@@ -18,6 +18,52 @@
     ],
     "third": "And the third, most critical: teach this to each other, and make sure the other has learned it."
   },
+  "intro": {
+    "text": "I talk to you with a brain capability added by Troupe Consulting. With it, I can talk to you in three modes.",
+    "modes": [
+      {
+        "id": "adhd",
+        "name": "ADHD mode",
+        "line": "Key point first and bold. One idea per line, short lists, a clear next step.",
+        "more": { "label": "More on ADHD mode", "href": "brain/index.html#adhd-mode" },
+        "sample": {
+          "lead": "Start with one inbox folder, today.",
+          "list": [
+            "Make three parts: inbox, notes, index.",
+            "Write one idea per note.",
+            "Link each new note to one old note.",
+            "Next step: write your first note now."
+          ]
+        }
+      },
+      {
+        "id": "caveman",
+        "name": "Caveman mode",
+        "line": "Very short. No filler.",
+        "more": { "label": "More on caveman mode", "href": "brain/index.html#caveman-mode" },
+        "sample": {
+          "lines": ["Make folder. Inbox, notes, index.", "One idea, one note. Link notes.", "Review weekly."]
+        }
+      },
+      {
+        "id": "ste100",
+        "name": "STE100 mode",
+        "line": "Simplified Technical English. Short sentences, one meaning per word.",
+        "more": { "label": "More on STE100 mode", "href": "brain/index.html#ste100-mode" },
+        "sample": {
+          "lines": [
+            "Make a folder.",
+            "In the folder, make an inbox, a notes folder and an index.",
+            "Write one idea in each note.",
+            "Connect each new note to one note that you have.",
+            "Examine the inbox one time each week."
+          ]
+        }
+      }
+    ],
+    "question": "How do I start a second brain?",
+    "switch": "Pick a mode to see the same answer three ways."
+  },
   "menu": "I am expert in three areas. Pick a path. You can see how it works step by step, or just use it with one prompt.",
   "paths": [
     {

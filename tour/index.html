@@ -21,6 +21,19 @@
 .charter ol { font: 500 1.05rem/1.45 var(--serif); }
 .charter .third { font: 600 1.05rem/1.45 var(--serif); margin-top: .6rem; }
 
+.modes { padding-left: 1.1rem; margin: .5rem 0; }
+.modes li { margin: .3rem 0; max-width: none; }
+.switch { display: flex; flex-wrap: wrap; gap: .4rem; margin: .3rem 0 .6rem; }
+.mode { font: .72rem var(--mono); text-transform: uppercase; letter-spacing: .05em; padding: .45rem .8rem;
+  border: 1px solid var(--line); background: var(--card); color: var(--soft); border-radius: 999px; min-height: 40px; }
+.mode[aria-pressed="true"] { border-color: var(--accent); color: var(--ink); box-shadow: inset 0 0 0 1px var(--accent); }
+.demo { background: var(--sunk); padding: .6rem .75rem; }
+.demo .q { color: var(--soft); font-size: .9rem; margin-bottom: .4rem; }
+.ans { border-left: 3px solid var(--accent); padding-left: .7rem; }
+.ans .lead { font-weight: 700; }
+.ans ul { margin: .3rem 0 0; padding-left: 1.1rem; }
+.ans li { margin: .15rem 0; }
+
 .acts { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .7rem; }
 .act, .copy, .play { font: .74rem var(--mono); text-transform: uppercase; letter-spacing: .05em; padding: .55rem .9rem;
   border: 2px solid var(--accent); background: var(--card); color: var(--ink); border-radius: 999px; min-height: 44px; }
@@ -174,7 +187,45 @@
     c.tasks.forEach(function (t) { ol.appendChild(el("li", "", t)); });
     b.appendChild(ol);
     b.appendChild(el("p", "third", c.third));
+    modes();
     menu();
+  }
+
+  // The intro after the charter: three talk modes, each with a "more" link and one sample answer.
+  function modes() {
+    var m = T.intro, b = bubble("fm", true);
+    b.appendChild(el("p", "", m.text));
+    var ul = el("ul", "modes");
+    m.modes.forEach(function (md) {
+      var li = el("li");
+      li.appendChild(el("strong", "", md.name + ". "));
+      li.appendChild(document.createTextNode(md.line + " "));
+      var a = el("a", "", md.more.label); a.href = href(md.more.href);
+      li.appendChild(a); ul.appendChild(li);
+    });
+    b.appendChild(ul);
+    b.appendChild(el("p", "lbl", m.switch));
+    var sw = el("div", "switch"); sw.setAttribute("role", "group"); sw.setAttribute("aria-label", "Talk mode");
+    b.appendChild(sw);
+    var demo = el("div", "demo");
+    demo.appendChild(el("p", "q", "You: " + m.question));
+    var ans = el("div", "ans"); ans.setAttribute("aria-live", "polite");
+    demo.appendChild(ans); b.appendChild(demo);
+    function show(md) {
+      Array.prototype.forEach.call(sw.children, function (x) { x.setAttribute("aria-pressed", x.dataset.id === md.id ? "true" : "false"); });
+      ans.textContent = "";
+      ans.appendChild(el("span", "who", "First Mate · " + md.name));
+      var s = md.sample;
+      if (s.lead) ans.appendChild(el("p", "lead", s.lead));
+      if (s.list) { var l = el("ul"); s.list.forEach(function (t) { l.appendChild(el("li", "", t)); }); ans.appendChild(l); }
+      (s.lines || []).forEach(function (t) { ans.appendChild(el("p", "", t)); });
+    }
+    m.modes.forEach(function (md) {
+      var btn = el("button", "mode", md.name); btn.type = "button"; btn.dataset.id = md.id;
+      btn.addEventListener("click", function () { show(md); });
+      sw.appendChild(btn);
+    });
+    show(m.modes[0]);
   }
 
   function choiceGrid(b, items, open) {
