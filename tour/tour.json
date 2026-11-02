@@ -1,10 +1,43 @@
 {
-  "version": 1,
-  "about": "The guided tour script. One source: tour/index.html renders it, and the Guide bot will reuse it. Links are relative to the site root. Bot windows are scripted replays, never real logs. Bills and shopping are pretend.",
+  "version": 2,
+  "about": "The guided tour script. One source: tour/index.html renders it, and the Guide bot will reuse it. Links are relative to the site root; links starting with # point inside the tour page. {name} is the name the visitor picks for the bot and {you} is what the bot calls the visitor. Every capability claim must be true today; plans carry a 'coming' status. Bot windows are scripted replays, never real logs. Bills and shopping are pretend.",
   "start": {
     "commands": ["tour", "start"],
-    "greeting": "Hi. This is a short guided tour of First Mate. Type tour to start.",
-    "unknown": "This demo is a script, not a live bot. Type tour to start again, or pick a button."
+    "greeting": "Hey out there! I'm an automaton: a small helper bot with a big notebook. Type tour, or press the button, and I'll show you around.",
+    "button": "Start the tour",
+    "unknown": "Ha, I'd love to chat freely, but on this page I'm a script, not a live bot. Type tour to start again, or pick a button."
+  },
+  "persona": {
+    "bot": "Automaton",
+    "ask_name": "First things first. I don't have a name yet. What should I be called?",
+    "names": ["Huey", "Dewey", "Louie", "My Man Friday", "Chotu", "Jeeves"],
+    "own": "Or type your own",
+    "named": "{name}. I like it. Fits me like a fresh coat of paint.",
+    "ask_you": "And what should I call you?",
+    "yous": [
+      { "label": "Boss", "value": "boss", "default": true },
+      { "label": "Trooper", "value": "trooper" },
+      { "label": "Operator", "value": "operator" }
+    ],
+    "friday": "A good way to think about me: like a Man Friday, a Chotu or a Jeeves. The trusted helper you call to solve any problem."
+  },
+  "intro": {
+    "hello": "Hey there, {you}!",
+    "lines": [
+      { "text": "I'm {name}, a Troupe Consulting harness agent. I'm not a model. I'm the harness around one: the rules, tools, checks and notes that make a model useful." },
+      { "text": "I'm not tied to one model. The same rules load into Claude Code, Codex, OpenCode and Gemini CLI, so I can work across them." },
+      { "text": "Give me ten to-dos at once and I'll split them into jobs and run them side by side. Ten workers at once has been done on the owner's machine." },
+      { "text": "I double-check. Each worker backs every claim with a command or a file it read, and the gates check again before you see it." },
+      { "text": "Missing a skill? I'll go find it and install it through a set workflow, and you approve it first.", "status": "coming" },
+      { "text": "It's a bit like magic, except every trick is written down. Anything marked coming is a plan, not a feature yet." }
+    ],
+    "links_label": "Before we go on, the small print:",
+    "links": [
+      { "label": "Capability", "href": "#capability" },
+      { "label": "Security", "href": "#security" },
+      { "label": "Performance", "href": "#performance" }
+    ],
+    "charter_lead": "Now our deal. I call it the charter."
   },
   "charter": {
     "title": "The charter",
@@ -18,8 +51,8 @@
     ],
     "third": "And the third, most critical: teach this to each other, and make sure the other has learned it."
   },
-  "intro": {
-    "text": "I talk to you with a brain capability added by Troupe Consulting. With it, I can talk to you in three modes.",
+  "talk": {
+    "text": "One more thing, {you}. I talk to you with a brain capability added by Troupe Consulting. With it, I can talk in three modes.",
     "modes": [
       {
         "id": "adhd",
@@ -64,13 +97,127 @@
     "question": "How do I start a second brain?",
     "switch": "Pick a mode to see the same answer three ways."
   },
-  "menu": "I am expert in three areas. Pick a path. You can see how it works step by step, or just use it with one prompt.",
+  "menu": {
+    "text": "Right, {you}. Two things I'm best at. Pick one: see how it works step by step, or just use it with one prompt.",
+    "headline": ["organize", "knowledge"],
+    "more": "More ways in"
+  },
+  "trust": {
+    "title": "Capability, security and performance",
+    "lead": "The small print, in plain words. It describes the owner's own setup today.",
+    "sections": [
+      {
+        "id": "capability",
+        "title": "Capability: what I can do, and how I learn new tricks",
+        "points": [
+          { "text": "I work in a terminal and an agent window manager, with full automation access on the owner's machine. I can run commands, edit files and start other agents." },
+          { "text": "I split work into jobs and run them side by side. Ten workers at once has been done." },
+          { "text": "My rules load into Claude Code, Codex, OpenCode and Gemini CLI, so I am not tied to one model." },
+          { "text": "Skills are recipe cards. I see a one-line description of each, and load the full card only when a task needs it." },
+          { "text": "When a skill is missing, I find it and install it through a set workflow, with your approval.", "status": "coming" }
+        ],
+        "see": { "label": "Skills", "href": "skills.html" }
+      },
+      {
+        "id": "security",
+        "title": "Security: what I can touch, who approves, and secrets",
+        "points": [
+          { "text": "Each worker gets its own copy of the code (a git worktree), so a worker cannot break the main copy." },
+          { "text": "Every worker runs in its own window that you can open and watch, and its tool calls are logged." },
+          { "text": "Control mode today: workers skip permission checks by default. That is the standing setting, and the owner knows it." },
+          { "text": "A safer, model-reviewed permission mode is a one-line switch. It is not switched on yet.", "status": "coming" },
+          { "text": "You hold the big buttons. Only you merge, push to the main branch, delete, publish, send or spend. I stop and ask." },
+          { "text": "Secrets never go in files, commits, logs or prompts. That rule is in the rules file every agent reads at the start." },
+          { "text": "A hook blocks commands that would print a secret, and another warns on text shaped like a key.", "status": "installed, not yet proven in a test" }
+        ],
+        "see": { "label": "Cast and authority", "href": "cast.html" },
+        "daily": {
+          "label": "Daily safety check",
+          "line": "Once a day, send me this:",
+          "prompt": "Safety check: what did you change since yesterday, what is waiting for my OK, and did any secret touch a file?"
+        }
+      },
+      {
+        "id": "performance",
+        "title": "Performance: speed and reliability from scripts",
+        "points": [
+          { "text": "Work that must go the same way every time moves out of the model and into deterministic harness scripts: hooks, checks and builders. They are faster, cheaper and never guess." },
+          { "text": "Example: the work index is rebuilt by a script at the start of each session. No model, no network." },
+          { "text": "More harness research is on the way.", "status": "coming" }
+        ],
+        "see": { "label": "Harness flow", "href": "harness.html" }
+      }
+    ]
+  },
   "paths": [
+    {
+      "id": "organize",
+      "title": "Help you organize",
+      "summary": "Hand me the whole to-do pile. I sort it, run it side by side, and check it.",
+      "intro": "Let's get you organized, {you}. Three steps.",
+      "use_prompt": "Here is everything on my plate. Sort it into jobs: start now, needs me, can wait. Run the ones that can run in parallel, check each result, and stop before anything that sends, pays, merges or deletes: <your list>",
+      "steps": [
+        {
+          "title": "Dump the list",
+          "plain": "Tell me everything on your plate. Messy is fine. I sort it into jobs: what I can start now, what needs you, what can wait.",
+          "tech": "Each job becomes a written brief with one task and a check for done. The board has six phases, and a task leaves a phase only when that phase's exit check is true.",
+          "prompt": "Here is everything on my plate. Sort it into jobs: start now, needs me, can wait. Give each job one line saying what done looks like: <your list>",
+          "see": { "label": "Core logic: the pipeline", "href": "core.html#pipeline" }
+        },
+        {
+          "title": "Run them side by side",
+          "plain": "I hand the jobs to workers and run them at once. Each worker has its own copy of the work, so nobody trips over anybody.",
+          "tech": "One git worktree and one brief per worker. Workers report status lines back to me. Each claim is backed by a command or a file read.",
+          "prompt": "Run these jobs in parallel where they do not depend on each other. Tell me which ones must wait for another, and why: <jobs>",
+          "see": { "label": "Harness flow", "href": "harness.html" }
+        },
+        {
+          "title": "Check, then you decide",
+          "plain": "When work comes back, I check it, the gates check it, and then it's your call. I never merge, send or pay on my own.",
+          "tech": "Hooks block unsafe commands before they run. Only the owner holds merge, publish, send and spend.",
+          "prompt": "Before you show me any result, tell me how you checked it. Then stop and wait for my OK on anything that sends, pays, merges or deletes.",
+          "see": { "label": "Core logic: human approval", "href": "core.html#part-approval" }
+        }
+      ],
+      "teach_back": "Explain back to me how my to-do list turns into checked work, and which steps need my yes. Then ask me one question to check I understood."
+    },
+    {
+      "id": "knowledge",
+      "title": "Manage your knowledge (and keep mine up to date)",
+      "summary": "What we learn goes into a second brain, sorted and linked. My own rules get updated too, with your approval.",
+      "intro": "Knowledge time, {you}. Yours first, then mine.",
+      "use_prompt": "At the end of this chat, write a short note on what we decided and learned. Find the closest notes I already have, then tell me whether to merge, link or keep it separate. File nothing until I approve.",
+      "steps": [
+        {
+          "title": "Catch it the same day",
+          "plain": "At the end of a session I write a short note: what we decided, what we learned, what is still open. It goes to an inbox first, not straight into the brain.",
+          "tech": "Session notes are dated files in an inbox folder. Raw capture is not knowledge yet; it waits for the sort step.",
+          "prompt": "Write a capture note for this chat: goals, decisions, what we learned, open questions. Under 150 words. Do not file it yet.",
+          "see": { "label": "Second brain map", "href": "brain/index.html" }
+        },
+        {
+          "title": "Sort it and link it",
+          "plain": "Each note is boiled down to one idea and checked against what is already there: merge it, link it, or make a new note. No note is born alone.",
+          "tech": "An index lists every note and is rebuilt at the start of a session. Search local notes first, then the web.",
+          "prompt": "Here is a new note. Find the closest notes I already have. Tell me: merge into one, link to it, or keep it separate, and why: <note>",
+          "see": { "label": "Memory and index", "href": "s06.html" }
+        },
+        {
+          "title": "Keep mine up to date too",
+          "plain": "I learn as well. At night, a tool reads my old sessions and proposes changes to my own rules. It never writes them. You approve each one.",
+          "tech": "backpass reads tool logs and proposes rule edits backed by quotes from two or more sessions. The nightly job is installed but has not yet been seen to run.",
+          "status": "installed, not yet seen to run",
+          "prompt": "Look back at our chats this week. List each time I corrected you. For each, say whether the fix belongs in your rules, a skill, or nowhere, and write the exact wording. Change nothing until I approve.",
+          "see": { "label": "Core logic: self-improvement", "href": "core.html#part-improve" }
+        }
+      ],
+      "teach_back": "Explain back to me how a new topic reaches my second brain, and how your own rules get updated. Then ask me one question to check I understood."
+    },
     {
       "id": "ours",
       "title": "Use ours",
       "summary": "An opinionated way to store notes and cross-reference them. Three tracks.",
-      "intro": "Use our method. It is opinionated: one idea per note, every note linked to its neighbours, and nothing filed without a review. Pick a track.",
+      "intro": "Use our method, {you}. Fair warning: it's opinionated. One idea per note, every note linked to its neighbours, and nothing filed without a review. Pick a track.",
       "use_prompt": "From now on, keep my notes this way: one idea per note, a one-line description on each, and a link from every new note to at least one existing note. Nothing is filed until I approve it. Start with this: <what is on your mind>",
       "tracks": [
         {
@@ -279,7 +426,7 @@
     }
   },
   "end": {
-    "track_done": "Track done. One more thing, from the charter: teach it back. Send this to check you have learned it.",
-    "more": "Pick another track or path, or type tour to start again."
+    "track_done": "Nice work, {you}. That's the track. Now the charter's favourite part: teach it back. Send me this and I'll check we both got it.",
+    "more": "Pick another path, or type tour to start over. I don't get tired."
   }
 }
