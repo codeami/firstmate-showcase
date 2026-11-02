@@ -1,11 +1,151 @@
 {
   "version": 2,
-  "about": "The guided tour script. One source: tour/index.html renders it, and the Guide bot will reuse it. Links are relative to the site root; links starting with # point inside the tour page. {name} is the name the visitor picks for the bot and {you} is what the bot calls the visitor. Every capability claim must be true today; plans carry a 'coming' status. Bot windows are scripted replays, never real logs. Bills and shopping are pretend.",
+  "about": "The guided tour script. One source: tour/index.html renders it, and the home page chat (index.html) reads its chat block. Links are relative to the site root; links starting with # point inside the tour page. {name} is the name the visitor picks for the bot and {you} is what the bot calls the visitor. Every capability claim must be true today; plans carry a 'coming' status. Bot windows are scripted replays, never real logs. Bills and shopping are pretend.",
   "start": {
     "commands": ["tour", "start"],
     "greeting": "Hey out there! I'm EA-bot, an automaton: a small helper bot with a big notebook. Type tour, or press the button, and I'll show you around.",
     "button": "Start the tour",
     "unknown": "Ha, I'd love to chat freely, but on this page I'm a script, not a live bot. Type tour to start again, or pick a button."
+  },
+  "chat": {
+    "about": "The home page chat. Each node is one bot turn: one true fact, a see-how link, and the next topics. The page shows three options, the first three in next not yet opened. Folders group the review-later checklist and the map.",
+    "hello": "Hey out there! I'm EA-bot, a small helper bot with a big notebook. No typing needed: pick one of three, or save one for later.",
+    "folders": [
+      { "id": "work", "title": "How I work" },
+      { "id": "safety", "title": "Checks and safety" },
+      { "id": "memory", "title": "Memory" },
+      { "id": "us", "title": "You and me" }
+    ],
+    "root": "root",
+    "nodes": [
+      {
+        "id": "root", "title": "EA-bot",
+        "fact": "First surprise: I'm not the model. I'm the harness around it: the rules, tools, checks and notes that make a model useful.",
+        "see": { "label": "Core logic", "href": "core.html" },
+        "next": ["work", "safety", "memory"]
+      },
+      {
+        "id": "work", "folder": "work", "title": "Jobs side by side", "chip": "How do you get work done?",
+        "fact": "Give me ten to-dos at once and I split them into jobs and run them side by side. Ten workers at once has been done on the owner's machine.",
+        "see": { "label": "Harness flow", "href": "harness.html" },
+        "next": ["worktree", "pipeline", "models", "running"]
+      },
+      {
+        "id": "worktree", "folder": "work", "title": "A copy each", "chip": "Why don't workers collide?",
+        "fact": "Each worker gets its own git worktree: a separate copy of the code. A worker cannot break the main copy, and nobody trips over anybody.",
+        "see": { "label": "Core logic: isolation", "href": "core.html#part-isolation" },
+        "next": ["pipeline", "buttons", "scripts", "running"]
+      },
+      {
+        "id": "pipeline", "folder": "work", "title": "One brief, one task", "chip": "What does a worker get?",
+        "fact": "Every job becomes a written brief with one task and a check for done. The board has six phases, and a task leaves a phase only when that phase's exit check is true.",
+        "see": { "label": "Core logic: the pipeline", "href": "core.html#pipeline" },
+        "next": ["worktree", "models", "scripts", "running"]
+      },
+      {
+        "id": "models", "folder": "work", "title": "Not tied to one model", "chip": "Which AI model are you?",
+        "fact": "More than one. A short rules file, called the map, is linked into Claude Code, Codex, OpenCode, Gemini CLI and backpass. Change it once and all five see it next session.",
+        "see": { "label": "How it works: one rules file", "href": "overview.html#map" },
+        "next": ["pipeline", "skills", "vendor", "scripts"]
+      },
+      {
+        "id": "running", "folder": "work", "title": "It runs today", "chip": "Is this real or a design?",
+        "fact": "It runs, in daily use on the owner's machine. One of my workers built these pages. On one day four workers ran in parallel, and three delivered a reviewed pull request.",
+        "see": { "label": "What works today", "href": "s09.html" },
+        "next": ["honest", "vendor", "scripts"]
+      },
+      {
+        "id": "scripts", "folder": "work", "title": "Scripts, not guesses", "chip": "How do you stay fast?",
+        "fact": "Work that must go the same way every time moves out of the model and into scripts: hooks, checks and builders. They are faster, cheaper and never guess.",
+        "see": { "label": "Tour: performance", "href": "tour/index.html#performance" },
+        "next": ["index", "hooks", "running"]
+      },
+      {
+        "id": "safety", "folder": "safety", "title": "Checked three times", "chip": "How do I know it's right?",
+        "fact": "Nothing lands until it is checked three times. The worker backs each claim with a command or a file read, the gates check again, and then you decide.",
+        "see": { "label": "Core logic: the gate", "href": "core.html#part-gate" },
+        "next": ["hooks", "buttons", "honest", "review"]
+      },
+      {
+        "id": "hooks", "folder": "safety", "title": "Hooks", "chip": "What stops a bad command?",
+        "fact": "Hooks: scripts the tool must run before an action. One blocks file writes through the shell and says to use the editor tools. It has blocked commands in a scout's own session.",
+        "see": { "label": "Harness flow: hooks", "href": "harness.html#hooks" },
+        "next": ["buttons", "honest", "scripts"]
+      },
+      {
+        "id": "buttons", "folder": "safety", "title": "You hold the big buttons", "chip": "Who presses the big buttons?",
+        "fact": "You do. Only you merge, push to the main branch, delete, publish, send or spend. I stop at a draft and ask.",
+        "see": { "label": "Core logic: human approval", "href": "core.html#part-approval" },
+        "next": ["hooks", "review", "vendor"]
+      },
+      {
+        "id": "honest", "folder": "safety", "title": "Honest gaps", "chip": "Any weak spots?",
+        "fact": "Yes, and they stay on the site. A manual once said workers run with permission checks on. A check counted: all 10 running workers had them off. The manual was fixed. A safer mode is a one-line switch, not switched on yet.",
+        "see": { "label": "Harness flow: checks that proved it wrong", "href": "harness.html#tests" },
+        "next": ["hooks", "running", "review"]
+      },
+      {
+        "id": "review", "folder": "safety", "title": "Pages, not a terminal", "chip": "How do you show your work?",
+        "fact": "Every report, plan or draft for you becomes a page you can mark up. Your notes go back to the agent that wrote it, which fixes the page and asks again.",
+        "see": { "label": "Review surfaces", "href": "s07.html" },
+        "next": ["buttons", "teachback", "brain"]
+      },
+      {
+        "id": "memory", "folder": "memory", "title": "Memory in files", "chip": "Do you remember me?",
+        "fact": "Not in my head. In files: the rules, the chat, a store of reports and notes, and an index that says where things are.",
+        "see": { "label": "Memory and index", "href": "s06.html" },
+        "next": ["index", "skills", "learn", "brain"]
+      },
+      {
+        "id": "index", "folder": "memory", "title": "The work index", "chip": "How do you find old work?",
+        "fact": "A script rebuilds an index of every work folder at the start of each session: no model, no network. It exists because an agent once searched the web for work that was already on disk.",
+        "see": { "label": "Memory and index", "href": "s06.html" },
+        "next": ["skills", "brain", "scripts"]
+      },
+      {
+        "id": "skills", "folder": "memory", "title": "Skills as recipe cards", "chip": "How do you learn new tricks?",
+        "fact": "Skills are recipe cards. I see a one-line description of each, and load the full card only when a task needs it.",
+        "see": { "label": "Skills", "href": "skills.html" },
+        "next": ["learn", "models", "index"]
+      },
+      {
+        "id": "learn", "folder": "memory", "title": "Rules that improve", "chip": "Do you get better over time?",
+        "fact": "A tool called backpass reads my old sessions and proposes edits to my own rules. It never writes them. You approve each one.",
+        "status": "nightly job installed, not yet seen to run",
+        "see": { "label": "Core logic: self-improvement", "href": "core.html#part-improve" },
+        "next": ["teachback", "skills", "honest"]
+      },
+      {
+        "id": "brain", "folder": "memory", "title": "The second brain", "chip": "Where does what we learn go?",
+        "fact": "Into a second brain. A note lands in an inbox the same day, is boiled down to one idea, then linked to its neighbours. No note is born alone.",
+        "see": { "label": "Second brain map", "href": "brain/index.html" },
+        "next": ["index", "teachback", "modes"]
+      },
+      {
+        "id": "modes", "folder": "us", "title": "Three talk modes", "chip": "Can you talk my way?",
+        "fact": "I can talk in three modes. ADHD mode puts the key point first. Caveman mode is very short. STE100 mode uses Simplified Technical English.",
+        "see": { "label": "Second brain: ADHD mode", "href": "brain/index.html#adhd-mode" },
+        "next": ["charter", "teachback", "brain"]
+      },
+      {
+        "id": "charter", "folder": "us", "title": "The charter", "chip": "What's our deal?",
+        "fact": "A chatbot sets no contract. We do. We both organize life and build knowledge. The third task matters most: teach it to each other, and check the other has learned it.",
+        "see": { "label": "Guided tour", "href": "tour/index.html" },
+        "next": ["teachback", "modes", "vendor"]
+      },
+      {
+        "id": "teachback", "folder": "us", "title": "Teach it back", "chip": "How do you check I learned it?",
+        "fact": "At the end of a tour track I ask you to teach it back in your own words. A teach-back shows the gaps a re-read hides.",
+        "see": { "label": "Guided tour", "href": "tour/index.html" },
+        "next": ["charter", "brain", "modes"]
+      },
+      {
+        "id": "vendor", "folder": "us", "title": "Agents as vendors", "chip": "How should I think about you?",
+        "fact": "Like a contract with vendors. You scope the work, write down who may do what, ask for status, and accept work only on evidence.",
+        "see": { "label": "Agents as vendors", "href": "vendors.html" },
+        "next": ["buttons", "charter", "running"]
+      }
+    ]
   },
   "persona": {
     "bot": "EA-bot",

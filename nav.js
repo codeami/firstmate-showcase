@@ -5,7 +5,7 @@
 var DRAFT = false; // false removes the draft banner on every page
 
 var PAGES = [
-  ["index.html",     "The story"],
+  ["story.html",     "The story"],
   ["overview.html",  "How it works"],
   ["core.html",      "Core logic"],
   ["skills.html",    "Skills"],
