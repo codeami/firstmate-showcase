@@ -8,6 +8,8 @@ Read it at https://codeami.github.io/firstmate-showcase/
 
 The pages are plain HTML, `style.css` and `nav.js`. There is no build step for them. Open `index.html` from disk to read it locally.
 
+`kit/` is the shared Harbor Signal look for every front end: `tokens.css` (the only file with colours), `kit.css` (the shared parts), `bosun.svg` (the mascot) and `index.html`, a style guide showing every part in light and dark. Other apps link the two CSS files from https://codeami.github.io/firstmate-showcase/kit/. The showcase pages do not use the kit yet.
+
 The two interactive maps, `maps/skills.html` and `maps/flow.html`, are built files. Their source is `maps/src/*/map.json` and the shell in `maps/_shared/` comes from [super-board](https://github.com/EricTechPro/super-board) by EricTechPro (MIT; see `maps/_shared/NOTICE`). To rebuild: `python3 -I maps/_shared/build.py maps/src/skills/map.json maps/skills.html` (and the same for `flow`).
 
 The guided tour, `tour/index.html`, draws everything from `tour/tour.json`, the one script for the tour. It fetches that file, so serve the folder to read it locally: `python3 -m http.server`, then open `/tour/`.
