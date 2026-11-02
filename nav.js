@@ -1,10 +1,13 @@
 /* Shared shell for every page: sidebar nav, header with day/night toggle,
    draft banner, byline and previous/next links. No build step, no network.
    To add or rename a page, edit one line in PAGES or MORE. Order here is reading order.
-   PAGES are the six main pages. MORE holds every other page, behind a "More" fold. */
+   PAGES are the main pages. MORE holds every other page, behind a "More" fold. */
 var DRAFT = false; // false removes the draft banner on every page
 
 var PAGES = [
+  ["blog/index.html", "Field Notes"],
+  ["arena.html",     "Harness arena"],
+  ["safety.html",    "Safety by design"],
   ["story.html",     "The story"],
   ["overview.html",  "How it works"],
   ["core.html",      "Core logic"],
@@ -30,10 +33,11 @@ var MORE = [
   ["testing.html",   "Testing in public"],
   ["vendors.html",   "Agents as vendors"],
   ["s10.html",       "Influences"],
-  ["changelog.html", "Changelog"]
+  ["changelog.html", "Changelog"],
+  ["about.html",     "About"]
 ];
 
-var SITE = "Six-Lane Agent Setup";
+var SITE = "The Chart Room";
 
 /* Theme: follow the system unless the reader picked one. The choice is kept in
    localStorage. This runs in the head, before the body is drawn, so there is
