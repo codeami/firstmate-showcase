@@ -125,6 +125,10 @@
 .trust ul { padding-left: 1.1rem; }
 .trust li { margin: .35rem 0; }
 .trust h3:target { color: var(--accent); }
+.intent { scroll-margin-top: 64px; }
+.intent .box h3 { font: .7rem/1.5 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--soft); margin: .8rem 0 .2rem; }
+.intent .box h3:first-child { margin-top: 0; }
+.intent .box ul { padding-left: 1.1rem; margin: 0; }
 </style>
 <script src="../nav.js"></script>
 </head>
@@ -143,6 +147,7 @@
   <button type="submit">Send</button>
 </form>
 
+<section class="intent" id="intent"></section>
 <section class="trust" id="trust"></section>
 </main>
 <script>
@@ -525,6 +530,22 @@
     into.appendChild(box);
   }
 
+  // How to ask: one example brief, the owner's words above Firstmate's spec.
+  function intent() {
+    var R = T.intent, sec = document.getElementById("intent");
+    sec.appendChild(el("h2", "", R.title));
+    sec.appendChild(el("p", "", R.line));
+    sec.appendChild(el("p", "", R.lead));
+    var box = el("div", "box key"), ul = el("ul");
+    box.appendChild(el("h3", "", R.brief.intent.label));
+    box.appendChild(el("p", "", "“" + R.brief.intent.text + "”"));
+    box.appendChild(el("h3", "", R.brief.spec.label));
+    R.brief.spec.points.forEach(function (t) { ul.appendChild(el("li", "", t)); });
+    box.appendChild(ul);
+    sec.appendChild(box);
+    seeLink(sec, R.credit, "The idea: ");
+  }
+
   // Capability, security and performance: a plain section under the chat, so the intro's small links have a target.
   function trust() {
     var R = T.trust, sec = document.getElementById("trust");
@@ -559,6 +580,7 @@
     return r.json();
   }).then(function (data) {
     T = data;
+    intent();
     trust();
     greet();
     if (location.hash) { var t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }

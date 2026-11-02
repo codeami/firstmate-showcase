@@ -30,6 +30,12 @@ html { scroll-behavior: smooth; }
 .k-bubble p { margin: 0; }
 .k-bubble .see { display: inline-block; margin-top: 6px; font-size: 14px; font-weight: 700; }
 .k-bubble .k-status { display: flex; margin-top: 6px; }
+/* An example brief: the owner's words on top, Firstmate's spec below. */
+.brief { margin-top: 8px; padding: 10px 12px; background: var(--bg); border: 1px solid var(--line); box-shadow: inset 3px 0 0 var(--accent); border-radius: var(--radius); }
+.brief h4 { margin: 0 0 4px; font: 700 13px/1.3 var(--font-body); color: var(--mute); text-transform: uppercase; letter-spacing: .04em; }
+.brief h4 + * { margin-bottom: 8px; }
+.brief ul { margin: 0; padding-left: 18px; }
+.brief .credit { font-size: 14px; }
 .typing { display: inline-flex; gap: 4px; padding: 14px 16px; }
 .typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--mute); animation: dot 1s infinite ease-in-out; }
 .typing i:nth-child(2) { animation-delay: .15s; } .typing i:nth-child(3) { animation-delay: .3s; }
@@ -172,7 +178,7 @@ html { scroll-behavior: smooth; }
   var KEY = "ea-chat:v1";
   var NS = "http://www.w3.org/2000/svg";
   var log = document.getElementById("log");
-  var C, byId = {}, S, busy = false;
+  var C, I, byId = {}, S, busy = false;
   var calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* Day/night: the same "theme" choice nav.js keeps for the other pages. */
@@ -250,12 +256,24 @@ html { scroll-behavior: smooth; }
     var row = botRow(node.fact);
     var b = row.lastChild;
     if (node.status) b.appendChild(el("span", "k-status warn", node.status));
+    if (node.brief && I) b.appendChild(briefBox(I));
     if (node.see) {
       var a = el("a", "see", "See how: " + node.see.label + " →");
       a.href = node.see.href;
       b.appendChild(a);
     }
     return row;
+  }
+  function briefBox(it) {
+    var box = el("div", "brief"), ul = el("ul");
+    box.appendChild(el("h4", "", it.brief.intent.label));
+    box.appendChild(el("p", "", "“" + it.brief.intent.text + "”"));
+    box.appendChild(el("h4", "", it.brief.spec.label));
+    it.brief.spec.points.forEach(function (t) { ul.appendChild(el("li", "", t)); });
+    box.appendChild(ul);
+    var p = el("p", "credit", "The idea: "), a = el("a", "", it.credit.label);
+    a.href = it.credit.href; p.appendChild(a); box.appendChild(p);
+    return box;
   }
   function meRow(text) {
     var row = el("div", "k-row");
@@ -507,7 +525,7 @@ html { scroll-behavior: smooth; }
     if (!r.ok) throw new Error(r.status);
     return r.json();
   }).then(function (T) {
-    C = T.chat;
+    C = T.chat; I = T.intent;
     C.nodes.forEach(function (n) { byId[n.id] = n; });
     S = load();
     // Drop ids a newer script no longer has.
